@@ -1967,5 +1967,24 @@
     "fats": 18.0,
     "portion_g": 200.0,
     "source": "llm_hf"
+  },
+  "soyabean": {
+    "dish": "soybeans",
+    "calories": 173.0,
+    "protein": 16.6,
+    "carbs": 9.9,
+    "fats": 9.4,
+    "portion_g": 100.0,
+    "source": "llm_hf-primary"
+  },
+  "papdi_chat": {
+    "dish": "papdi_chaat",
+    "calories": 300.0,
+    "protein": 7.5,
+    "carbs": 45.0,
+    "fats": 11.2,
+    "portion_g": 150,
+    "serving_desc": "1 plate",
+    "source": "lookup_table"
   }
 }

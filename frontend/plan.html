@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FitAI — Smart Meal Plan</title>
+  <title>FitAI — Plan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
 
     :root {
       --bg:        #0d0d0d;
@@ -21,11 +21,12 @@
       --success:   #4ade80;
       --warn:      #ffb347;
       --danger:    #ff4444;
-      --agent:     #7c3aed;   /* purple for agent messages */
+      --agent-bg:  #1a1a0f;
+      --agent-bdr: rgba(232,255,71,0.2);
       --font-head: 'Syne', sans-serif;
       --font-body: 'DM Sans', sans-serif;
       --radius:    16px;
-      --radius-sm: 8px;
+      --radius-sm: 10px;
     }
 
     body { background:var(--bg); color:var(--text); font-family:var(--font-body); font-weight:300; min-height:100vh; }
@@ -38,177 +39,174 @@
 
     .wrapper { max-width:560px; margin:0 auto; padding:0 20px 120px; }
 
-    /* Header */
-    header { padding:40px 0 20px; animation:fadeDown 0.5s ease both; }
-    .header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-    .logo { font-family:var(--font-head); font-weight:800; font-size:1.6rem; letter-spacing:-0.03em; display:flex; align-items:center; gap:8px; }
+    /* ── Header ── */
+    header { padding:36px 0 16px; animation:fadeDown 0.5s ease both; }
+    .header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
+    .logo { font-family:var(--font-head); font-weight:800; font-size:1.5rem; letter-spacing:-0.03em; display:flex; align-items:center; gap:8px; }
     .logo-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
     .nav-links { display:flex; gap:16px; }
     .nav-links a { font-size:0.8rem; color:var(--muted); text-decoration:none; transition:color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color:var(--text); }
-    .page-sub { font-size:0.82rem; color:var(--muted); margin-top:4px; }
 
-    /* View tabs */
-    .view-tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; margin-bottom:20px; }
+    /* ── Day type chip ── */
+    .day-chip-row { display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+    .day-chip { font-size:0.72rem; border-radius:20px; padding:4px 12px; border:1px solid; font-weight:500; }
+    .day-chip.gym  { border-color:rgba(232,255,71,0.4); color:var(--accent); background:rgba(232,255,71,0.06); }
+    .day-chip.rest { border-color:rgba(102,102,102,0.4); color:var(--muted); background:transparent; }
+    .day-name-label { font-family:var(--font-head); font-size:0.9rem; font-weight:700; }
+
+    /* ── Tabs ── */
+    .view-tabs { display:flex; gap:3px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:3px; margin-bottom:16px; }
     .view-tab { flex:1; padding:8px; border-radius:7px; border:none; background:transparent; color:var(--muted); font-family:var(--font-body); font-size:0.82rem; cursor:pointer; transition:all 0.2s; }
     .view-tab.active { background:var(--surface2); color:var(--text); font-weight:500; }
 
-    /* ── PLAN VIEW ── */
-    #planView { display:block; }
-
-    /* Macro ring summary card */
-    .goal-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:14px; position:relative; overflow:hidden; }
-    .goal-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--agent),#a78bfa); }
-    .goal-card-title { font-family:var(--font-head); font-size:0.8rem; font-weight:700; color:#a78bfa; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; }
-    .goal-macros { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
-    .goal-macro { background:var(--surface2); border-radius:var(--radius-sm); padding:8px; text-align:center; }
-    .goal-macro-val { font-family:var(--font-head); font-size:1rem; font-weight:800; }
-    .goal-macro-label { font-size:0.62rem; color:var(--muted); text-transform:uppercase; }
-
-    /* Remaining macros bar */
-    .remaining-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; display:none; }
-    .remaining-card.show { display:block; animation:fadeUp 0.4s ease both; }
-    .remaining-title { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
-    .remaining-bars { display:flex; flex-direction:column; gap:8px; }
-    .rem-bar-row { display:flex; align-items:center; gap:10px; }
-    .rem-bar-label { font-size:0.72rem; color:var(--muted); width:32px; flex-shrink:0; }
-    .rem-bar-wrap { flex:1; height:6px; background:var(--border); border-radius:3px; }
-    .rem-bar { height:6px; border-radius:3px; transition:width 0.6s ease; }
-    .rem-bar-val { font-family:var(--font-head); font-size:0.72rem; font-weight:700; min-width:60px; text-align:right; }
-
-    /* Chat messages */
-    .chat-area { display:flex; flex-direction:column; gap:12px; margin-bottom:14px; }
-
-    .msg-agent, .msg-user, .msg-system {
-      max-width:90%; padding:12px 14px; border-radius:14px;
-      font-size:0.85rem; line-height:1.55; animation:fadeUp 0.35s ease both;
+    /* ── Target card ── */
+    .target-card {
+      background:var(--agent-bg);
+      border:1px solid var(--agent-bdr);
+      border-radius:var(--radius);
+      padding:14px 16px;
+      margin-bottom:12px;
     }
+    .target-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .target-card-label { font-size:0.68rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; }
+    .target-card-sub   { font-size:0.7rem; color:var(--muted); }
+    .target-macros { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+    .target-macro { background:var(--surface2); border-radius:8px; padding:7px 4px; text-align:center; }
+    .target-macro-val { font-family:var(--font-head); font-size:0.95rem; font-weight:800; }
+    .target-macro-lbl { font-size:0.6rem; color:var(--muted); text-transform:uppercase; margin-top:1px; }
+
+    /* ── Progress card ── */
+    .progress-card {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:14px 16px;
+      margin-bottom:12px;
+      display:none;
+    }
+    .progress-card.show { display:block; animation:fadeUp 0.35s ease both; }
+    .progress-label { font-size:0.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+    .progress-bar-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+    .progress-bar-row:last-child { margin-bottom:0; }
+    .pb-lbl { font-size:0.7rem; color:var(--muted); width:38px; flex-shrink:0; }
+    .pb-track { flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+    .pb-fill { height:100%; border-radius:3px; transition:width 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .pb-fill-cal  { background:var(--accent); }
+    .pb-fill-pro  { background:var(--success); }
+    .pb-fill-carb { background:var(--warn); }
+    .pb-val { font-family:var(--font-head); font-size:0.72rem; font-weight:700; min-width:64px; text-align:right; }
+
+    /* ── Chat ── */
+    .chat-area { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
 
     .msg-agent {
-      background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.25);
-      border-radius:14px 14px 14px 4px; align-self:flex-start;
+      max-width:92%; align-self:flex-start;
+      background:var(--agent-bg); border:1px solid var(--agent-bdr);
+      border-radius:14px 14px 14px 4px;
+      padding:12px 14px; font-size:0.84rem; line-height:1.55;
+      animation:msgIn 0.35s ease both;
     }
-
-    .msg-agent .msg-label { font-size:0.68rem; color:#a78bfa; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:5px; }
+    .msg-agent-label { font-size:0.65rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:5px; }
 
     .msg-user {
+      max-width:82%; align-self:flex-end;
       background:var(--surface2); border:1px solid var(--border);
-      border-radius:14px 14px 4px 14px; align-self:flex-end; color:var(--text);
+      border-radius:14px 14px 4px 14px;
+      padding:10px 13px; font-size:0.84rem;
+      animation:msgIn 0.3s ease both;
     }
 
     .msg-system {
-      background:rgba(232,255,71,0.05); border:1px solid rgba(232,255,71,0.15);
-      align-self:center; text-align:center; color:var(--muted); font-size:0.78rem;
-      border-radius:10px; padding:8px 14px;
+      align-self:center; font-size:0.75rem; color:var(--muted);
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:20px; padding:5px 14px;
+      animation:msgIn 0.3s ease both;
     }
 
-    /* Plan card inside agent message */
-    .plan-card { margin-top:10px; }
-    .plan-meal { margin-bottom:10px; }
-    .plan-meal-header { font-family:var(--font-head); font-size:0.82rem; font-weight:700; color:var(--accent); margin-bottom:4px; text-transform:capitalize; }
-    .plan-dish-row { display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
-    .plan-dish-row:last-child { border-bottom:none; }
-    .plan-dish-name { font-size:0.82rem; text-transform:capitalize; }
-    .plan-dish-meta { font-size:0.72rem; color:var(--muted); }
-    .plan-dish-kcal { font-family:var(--font-head); font-size:0.78rem; color:var(--accent); font-weight:700; }
-    .plan-total { margin-top:8px; padding-top:8px; border-top:1px solid var(--border); font-size:0.78rem; color:var(--muted); }
-    .plan-total b { color:var(--accent); font-family:var(--font-head); }
-
-    /* Log meal buttons inside suggestion */
-    .log-suggestion-btn {
-      display:inline-block; margin-top:10px; padding:7px 14px;
-      border-radius:var(--radius-sm); border:1px solid rgba(74,222,128,0.4);
-      background:transparent; color:var(--success); font-size:0.8rem;
-      cursor:pointer; transition:background 0.2s;
-    }
-    .log-suggestion-btn:hover { background:rgba(74,222,128,0.08); }
-
-    /* Typing indicator */
-    .typing-indicator { display:none; align-items:center; gap:6px; padding:8px 14px; background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.2); border-radius:14px 14px 14px 4px; align-self:flex-start; }
-    .typing-indicator.show { display:flex; animation:fadeUp 0.3s ease both; }
-    .typing-dot { width:7px; height:7px; background:#a78bfa; border-radius:50%; animation:typingBounce 1.2s ease infinite; }
+    /* Typing */
+    .typing-wrap { display:none; align-self:flex-start; background:var(--agent-bg); border:1px solid var(--agent-bdr); border-radius:14px 14px 14px 4px; padding:10px 14px; }
+    .typing-wrap.show { display:flex; gap:5px; animation:fadeUp 0.3s ease both; }
+    .typing-dot { width:7px; height:7px; background:var(--accent); border-radius:50%; opacity:0.6; animation:typingBounce 1.2s ease infinite; }
     .typing-dot:nth-child(2) { animation-delay:0.15s; }
     .typing-dot:nth-child(3) { animation-delay:0.3s; }
-    @keyframes typingBounce { 0%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-6px);} }
+
+    /* Plan card inside message */
+    .plan-card { margin-top:8px; }
+    .plan-meal-head { font-family:var(--font-head); font-size:0.8rem; font-weight:700; color:var(--accent); margin:10px 0 5px; text-transform:capitalize; }
+    .plan-meal-head:first-child { margin-top:0; }
+    .plan-dish-row { display:flex; align-items:center; justify-content:space-between; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .plan-dish-row:last-child { border-bottom:none; }
+    .plan-dish-name { font-size:0.82rem; text-transform:capitalize; flex:1; }
+    .plan-dish-portion { font-size:0.7rem; color:var(--muted); margin-right:8px; }
+    .plan-dish-kcal { font-family:var(--font-head); font-size:0.78rem; color:var(--accent); font-weight:700; flex-shrink:0; }
+    .plan-total-row { margin-top:8px; padding-top:8px; border-top:1px solid var(--border); font-size:0.78rem; color:var(--muted); }
+    .plan-total-row b { color:var(--accent); font-family:var(--font-head); }
 
     /* No menu state */
-    .no-menu-state { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; text-align:center; }
-    .no-menu-state-icon { font-size:2.5rem; margin-bottom:10px; }
-    .no-menu-state-title { font-family:var(--font-head); font-size:1rem; font-weight:700; margin-bottom:6px; }
-    .no-menu-state-sub { font-size:0.82rem; color:var(--muted); margin-bottom:16px; }
-    .btn-go-menu { padding:10px 20px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#0d0d0d; font-family:var(--font-head); font-size:0.88rem; font-weight:700; cursor:pointer; }
+    .empty-state { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; text-align:center; margin-bottom:12px; }
+    .empty-icon { font-size:2.4rem; margin-bottom:10px; }
+    .empty-title { font-family:var(--font-head); font-size:1rem; font-weight:700; margin-bottom:5px; }
+    .empty-sub { font-size:0.8rem; color:var(--muted); margin-bottom:16px; line-height:1.6; }
+    .btn-empty { padding:10px 22px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#0d0d0d; font-family:var(--font-head); font-size:0.88rem; font-weight:700; cursor:pointer; }
 
-    /* Start plan button */
-    .btn-start-plan { width:100%; padding:14px; border-radius:var(--radius-sm); border:none; background:linear-gradient(135deg,var(--agent),#a78bfa); color:#fff; font-family:var(--font-head); font-size:1rem; font-weight:700; cursor:pointer; margin-bottom:14px; transition:opacity 0.2s; }
-    .btn-start-plan:disabled { opacity:0.4; cursor:default; }
+    /* Generate button */
+    .btn-generate { width:100%; padding:14px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#0d0d0d; font-family:var(--font-head); font-size:0.95rem; font-weight:700; cursor:pointer; margin-bottom:12px; transition:transform 0.15s,box-shadow 0.15s,opacity 0.2s; }
+    .btn-generate:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 20px rgba(232,255,71,0.25); }
+    .btn-generate:disabled { opacity:0.4; cursor:default; }
 
-    /* Log meal quick form */
-    .log-form { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; display:none; }
-    .log-form.show { display:block; animation:fadeUp 0.3s ease both; }
-    .log-form-title { font-family:var(--font-head); font-size:0.85rem; font-weight:700; margin-bottom:12px; }
-    .log-form-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
-    .log-form-field label { display:block; font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; }
-    .log-form-field select, .log-form-field input {
-      width:100%; background:var(--surface2); border:1.5px solid var(--border);
-      border-radius:var(--radius-sm); padding:8px 10px; color:var(--text);
-      font-family:var(--font-body); font-size:0.85rem; outline:none; transition:border-color 0.2s;
-    }
-    .log-form-field select:focus, .log-form-field input:focus { border-color:var(--accent); }
-    .log-form-field select option { background:#1f1f1f; }
-    .log-form-actions { display:flex; gap:8px; margin-top:4px; }
-    .btn-log-submit { flex:1; padding:10px; border-radius:var(--radius-sm); border:none; background:var(--success); color:#0d0d0d; font-family:var(--font-head); font-size:0.88rem; font-weight:700; cursor:pointer; }
-    .btn-log-cancel { padding:10px 14px; border-radius:var(--radius-sm); border:1px solid var(--border); background:transparent; color:var(--muted); font-family:var(--font-body); font-size:0.85rem; cursor:pointer; }
-
-    /* Floating action bar */
-    .action-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:560px; background:#111; border-top:1px solid var(--border); padding:12px 20px 28px; display:flex; gap:8px; z-index:50; }
-    .btn-log-meal { flex:1; padding:12px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface2); color:var(--text); font-family:var(--font-body); font-size:0.88rem; cursor:pointer; transition:border-color 0.2s; }
-    .btn-log-meal:hover { border-color:var(--success); color:var(--success); }
-    .btn-reset-plan { padding:12px 16px; border-radius:var(--radius-sm); border:1px solid var(--border); background:transparent; color:var(--muted); font-family:var(--font-body); font-size:0.85rem; cursor:pointer; transition:color 0.2s; }
-    .btn-reset-plan:hover { color:var(--danger); border-color:var(--danger); }
-
-    /* ── RAG VIEW ── */
+    /* ── RAG view ── */
     #ragView { display:none; }
 
-    .rag-intro { background:var(--surface); border:1px solid rgba(232,255,71,0.15); border-radius:var(--radius); padding:14px 16px; margin-bottom:16px; font-size:0.82rem; color:var(--muted); }
-    .rag-intro b { color:var(--accent); }
+    .rag-context-pills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+    .rag-pill { padding:6px 13px; border-radius:20px; border:1px solid var(--border); background:var(--surface); font-size:0.75rem; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+    .rag-pill:hover { border-color:var(--accent); color:var(--accent); }
 
-    .rag-suggestions { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
-    .rag-suggest-chip { padding:6px 12px; border-radius:20px; border:1px solid var(--border); background:var(--surface); font-size:0.75rem; color:var(--muted); cursor:pointer; transition:all 0.2s; }
-    .rag-suggest-chip:hover { border-color:var(--accent); color:var(--accent); }
-
-    .rag-chat { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; min-height:200px; }
-
-    .rag-msg-user { align-self:flex-end; max-width:85%; background:var(--surface2); border:1px solid var(--border); border-radius:14px 14px 4px 14px; padding:10px 13px; font-size:0.85rem; animation:fadeUp 0.3s ease both; }
-    .rag-msg-bot { align-self:flex-start; max-width:90%; background:rgba(232,255,71,0.04); border:1px solid rgba(232,255,71,0.12); border-radius:14px 14px 14px 4px; padding:10px 13px; font-size:0.85rem; line-height:1.6; animation:fadeUp 0.3s ease both; }
-    .rag-msg-bot .rag-label { font-size:0.68rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; }
-    .rag-sources { margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.7rem; color:var(--muted); }
+    .rag-chat { display:flex; flex-direction:column; gap:10px; min-height:160px; margin-bottom:12px; }
+    .rag-msg-user { align-self:flex-end; max-width:85%; background:var(--surface2); border:1px solid var(--border); border-radius:14px 14px 4px 14px; padding:10px 13px; font-size:0.84rem; animation:msgIn 0.3s ease both; }
+    .rag-msg-bot  { align-self:flex-start; max-width:92%; background:var(--agent-bg); border:1px solid var(--agent-bdr); border-radius:14px 14px 14px 4px; padding:12px 14px; font-size:0.84rem; line-height:1.6; animation:msgIn 0.35s ease both; }
+    .rag-bot-label { font-size:0.65rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:5px; }
+    .rag-sources { margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.72rem; color:var(--muted); }
     .rag-sources summary { cursor:pointer; }
-    .rag-source-item { padding:4px 0; }
+    .rag-source-item { padding:3px 0; opacity:0.7; }
 
-    .rag-typing { display:none; align-self:flex-start; padding:10px 14px; background:rgba(232,255,71,0.04); border:1px solid rgba(232,255,71,0.12); border-radius:14px 14px 14px 4px; }
-    .rag-typing.show { display:flex; align-items:center; gap:5px; animation:fadeUp 0.3s ease both; }
-    .rag-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:typingBounce 1.2s ease infinite; opacity:0.5; }
+    .rag-typing { display:none; align-self:flex-start; background:var(--agent-bg); border:1px solid var(--agent-bdr); border-radius:14px 14px 14px 4px; padding:10px 14px; }
+    .rag-typing.show { display:flex; gap:5px; animation:fadeUp 0.3s ease both; }
+    .rag-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; opacity:0.5; animation:typingBounce 1.2s ease infinite; }
     .rag-dot:nth-child(2) { animation-delay:0.15s; }
     .rag-dot:nth-child(3) { animation-delay:0.3s; }
 
-    /* Sticky input at bottom of RAG */
-    .rag-input-row { display:flex; gap:8px; margin-bottom:16px; }
-    .rag-input { flex:1; background:var(--surface2); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:11px 14px; color:var(--text); font-family:var(--font-body); font-size:0.88rem; outline:none; transition:border-color 0.2s; }
-    .rag-input:focus { border-color:var(--accent); }
-    .rag-input::placeholder { color:var(--muted); }
-    .btn-rag-send { padding:11px 16px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#0d0d0d; font-family:var(--font-head); font-size:0.88rem; font-weight:700; cursor:pointer; white-space:nowrap; }
+    /* ── Sticky input bar ── */
+    .input-bar {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+      width:100%; max-width:560px;
+      background:rgba(13,13,13,0.95); backdrop-filter:blur(12px);
+      border-top:1px solid var(--border);
+      padding:10px 20px 28px;
+      display:flex; gap:8px; z-index:50;
+    }
+    .input-bar-field { flex:1; background:var(--surface2); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:11px 14px; color:var(--text); font-family:var(--font-body); font-size:0.88rem; outline:none; transition:border-color 0.2s; }
+    .input-bar-field:focus { border-color:rgba(232,255,71,0.4); }
+    .input-bar-field::placeholder { color:var(--muted); }
+    .btn-send { padding:11px 18px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#0d0d0d; font-family:var(--font-head); font-size:0.88rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:opacity 0.2s; }
+    .btn-send:disabled { opacity:0.4; cursor:default; }
+    .btn-reset { padding:11px 14px; border-radius:var(--radius-sm); border:1px solid var(--border); background:transparent; color:var(--muted); font-family:var(--font-body); font-size:0.82rem; cursor:pointer; transition:color 0.2s; flex-shrink:0; }
+    .btn-reset:hover { color:var(--danger); border-color:var(--danger); }
 
-    /* Toast */
-    .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:10px 20px; font-size:0.85rem; transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); z-index:1000; white-space:nowrap; }
+    /* ── Toast ── */
+    .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:10px 20px; font-size:0.82rem; transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); z-index:1000; white-space:nowrap; pointer-events:none; }
     .toast.show { transform:translateX(-50%) translateY(0); }
 
-    @keyframes fadeUp   { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
-    @keyframes fadeDown { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
-    @keyframes pulse    { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.4);opacity:0.6;} }
+    @keyframes fadeUp       { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeDown     { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes msgIn        { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes pulse        { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.4);opacity:0.6;} }
+    @keyframes typingBounce { 0%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-6px);} }
   </style>
 </head>
 <body>
 <div class="wrapper">
+
   <header>
     <div class="header-row">
       <div class="logo"><span class="logo-dot"></span>FitAI</div>
@@ -218,500 +216,510 @@
         <a href="plan.html" class="active">Plan</a>
       </div>
     </div>
-    <div class="page-sub">AI meal planner + nutrition Q&A</div>
   </header>
 
-  <div class="view-tabs">
-    <button class="view-tab active" onclick="switchView('plan')">🤖 Meal Plan</button>
-    <button class="view-tab"        onclick="switchView('rag')">💬 Ask FitAI</button>
+  <!-- Day label + gym chip -->
+  <div class="day-chip-row">
+    <div class="day-name-label" id="dayNameLabel">Today</div>
+    <div class="day-chip" id="dayTypeChip">—</div>
   </div>
 
-  <!-- ══ PLAN VIEW ══ -->
+  <!-- Tabs -->
+  <div class="view-tabs">
+    <button class="view-tab active" id="tab-plan" onclick="switchTab('plan')">🤖 Meal Plan</button>
+    <button class="view-tab"        id="tab-rag"  onclick="switchTab('rag')">💬 Ask FitAI</button>
+  </div>
+
+  <!-- ══ PLAN TAB ══ -->
   <div id="planView">
 
-    <!-- Goals card -->
-    <div class="goal-card" id="goalCard">
-      <div class="goal-card-title">🎯 Today's targets</div>
-      <div class="goal-macros">
-        <div class="goal-macro"><div class="goal-macro-val" id="g-cal">—</div><div class="goal-macro-label">kcal</div></div>
-        <div class="goal-macro"><div class="goal-macro-val" id="g-pro">—</div><div class="goal-macro-label">protein g</div></div>
-        <div class="goal-macro"><div class="goal-macro-val" id="g-car">—</div><div class="goal-macro-label">carbs g</div></div>
-        <div class="goal-macro"><div class="goal-macro-val" id="g-fat">—</div><div class="goal-macro-label">fats g</div></div>
+    <!-- Target card -->
+    <div class="target-card" id="targetCard">
+      <div class="target-card-top">
+        <div class="target-card-label">🎯 Today's target</div>
+        <div class="target-card-sub" id="targetCardSub"></div>
+      </div>
+      <div class="target-macros">
+        <div class="target-macro"><div class="target-macro-val" id="t-cal">—</div><div class="target-macro-lbl">kcal</div></div>
+        <div class="target-macro"><div class="target-macro-val" id="t-pro">—</div><div class="target-macro-lbl">protein</div></div>
+        <div class="target-macro"><div class="target-macro-val" id="t-car">—</div><div class="target-macro-lbl">carbs</div></div>
+        <div class="target-macro"><div class="target-macro-val" id="t-fat">—</div><div class="target-macro-lbl">fats</div></div>
       </div>
     </div>
 
-    <!-- Remaining macros (shows after first meal logged) -->
-    <div class="remaining-card" id="remainingCard">
-      <div class="remaining-title">Remaining today</div>
-      <div class="remaining-bars">
-        <div class="rem-bar-row">
-          <div class="rem-bar-label">Cal</div>
-          <div class="rem-bar-wrap"><div class="rem-bar" id="rem-cal-bar" style="background:var(--accent)"></div></div>
-          <div class="rem-bar-val" id="rem-cal-val">—</div>
-        </div>
-        <div class="rem-bar-row">
-          <div class="rem-bar-label">Pro</div>
-          <div class="rem-bar-wrap"><div class="rem-bar" id="rem-pro-bar" style="background:var(--success)"></div></div>
-          <div class="rem-bar-val" id="rem-pro-val">—</div>
-        </div>
-        <div class="rem-bar-row">
-          <div class="rem-bar-label">Carb</div>
-          <div class="rem-bar-wrap"><div class="rem-bar" id="rem-car-bar" style="background:var(--warn)"></div></div>
-          <div class="rem-bar-val" id="rem-car-val">—</div>
-        </div>
+    <!-- Progress bars -->
+    <div class="progress-card" id="progressCard">
+      <div class="progress-label">Logged so far today</div>
+      <div class="progress-bar-row">
+        <div class="pb-lbl">Cal</div>
+        <div class="pb-track"><div class="pb-fill pb-fill-cal" id="pb-cal" style="width:0%"></div></div>
+        <div class="pb-val" id="pv-cal">0 / —</div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="pb-lbl">Protein</div>
+        <div class="pb-track"><div class="pb-fill pb-fill-pro" id="pb-pro" style="width:0%"></div></div>
+        <div class="pb-val" id="pv-pro">0g / —</div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="pb-lbl">Carbs</div>
+        <div class="pb-track"><div class="pb-fill pb-fill-carb" id="pb-carb" style="width:0%"></div></div>
+        <div class="pb-val" id="pv-carb">0g / —</div>
       </div>
     </div>
 
-    <!-- Chat area -->
-    <div class="chat-area" id="chatArea"></div>
-    <div class="typing-indicator" id="typingIndicator">
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
+    <!-- No menu state -->
+    <div class="empty-state" id="noMenuState" style="display:none">
+      <div class="empty-icon">🍽️</div>
+      <div class="empty-title">No menu set for today</div>
+      <div class="empty-sub">Set up your weekly mess menu first so FitAI knows what's available to plan with.</div>
+      <button class="btn-empty" onclick="location.href='menu.html'">Set up menu →</button>
     </div>
 
-    <!-- No menu state (shown if menu not set) -->
-    <div class="no-menu-state" id="noMenuState" style="display:none">
-      <div class="no-menu-state-icon">🍽️</div>
-      <div class="no-menu-state-title">No menu set for today</div>
-      <div class="no-menu-state-sub">Set up your weekly mess menu first, then the agent can plan meals for you.</div>
-      <button class="btn-go-menu" onclick="window.location.href='menu.html'">Set up menu →</button>
-    </div>
-
-    <!-- Start plan -->
-    <button class="btn-start-plan" id="btnStartPlan" onclick="startPlan()">
-      🤖 Generate today's meal plan
+    <!-- Generate button -->
+    <button class="btn-generate" id="btnGenerate" onclick="generatePlan()">
+      ✦ Generate today's meal plan
     </button>
 
-    <!-- Quick log form -->
-    <div class="log-form" id="logForm">
-      <div class="log-form-title">📝 Log a meal</div>
-      <div class="log-form-row">
-        <div class="log-form-field">
-          <label>Meal</label>
-          <select id="lf-meal">
-            <option value="breakfast">Breakfast</option>
-            <option value="lunch" selected>Lunch</option>
-            <option value="dinner">Dinner</option>
-          </select>
-        </div>
-        <div class="log-form-field">
-          <label>Dish name</label>
-          <input type="text" id="lf-dish" placeholder="e.g. Dal Rice" />
-        </div>
-      </div>
-      <div class="log-form-row">
-        <div class="log-form-field">
-          <label>Calories (kcal)</label>
-          <input type="number" id="lf-cal" min="0" placeholder="350" />
-        </div>
-        <div class="log-form-field">
-          <label>Protein (g)</label>
-          <input type="number" id="lf-pro" min="0" placeholder="12" />
-        </div>
-      </div>
-      <div class="log-form-actions">
-        <button class="btn-log-submit" onclick="submitLoggedMeal()">Log & get next suggestion</button>
-        <button class="btn-log-cancel" onclick="closeLogForm()">Cancel</button>
-      </div>
+    <!-- Chat -->
+    <div class="chat-area" id="planChat"></div>
+    <div class="typing-wrap" id="planTyping">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
     </div>
 
   </div>
 
-  <!-- ══ RAG VIEW ══ -->
+  <!-- ══ RAG TAB ══ -->
   <div id="ragView">
-    <div class="rag-intro">
-      Ask <b>FitAI</b> anything about mess food nutrition — like <em>"Is paneer good for weight loss?"</em> or <em>"What should I eat for dinner if I've already had 1400 kcal?"</em>
-    </div>
 
-    <div class="rag-suggestions">
-      <div class="rag-suggest-chip" onclick="askRag(this.textContent)">Is today's lunch good for weight loss?</div>
-      <div class="rag-suggest-chip" onclick="askRag(this.textContent)">Which mess dish has the most protein?</div>
-      <div class="rag-suggest-chip" onclick="askRag(this.textContent)">What's a light dinner option?</div>
-      <div class="rag-suggest-chip" onclick="askRag(this.textContent)">How many calories is a typical mess breakfast?</div>
-      <div class="rag-suggest-chip" onclick="askRag(this.textContent)">Am I getting enough protein this week?</div>
+    <div class="rag-context-pills">
+      <div class="rag-pill" onclick="sendRag(this.textContent)">Which mess dish has most protein?</div>
+      <div class="rag-pill" onclick="sendRag(this.textContent)">Is today's menu good for weight loss?</div>
+      <div class="rag-pill" onclick="sendRag(this.textContent)">Light dinner after heavy lunch?</div>
+      <div class="rag-pill" onclick="sendRag(this.textContent)">How much protein in dal rice?</div>
+      <div class="rag-pill" onclick="sendRag(this.textContent)">Am I meeting my protein today?</div>
     </div>
 
     <div class="rag-chat" id="ragChat"></div>
     <div class="rag-typing" id="ragTyping">
-      <div class="rag-dot"></div><div class="rag-dot"></div><div class="rag-dot"></div>
+      <div class="rag-dot"></div>
+      <div class="rag-dot"></div>
+      <div class="rag-dot"></div>
     </div>
 
-    <div class="rag-input-row">
-      <input class="rag-input" id="ragInput" placeholder="Ask about mess food nutrition…"
-             onkeydown="if(event.key==='Enter') askRag()" />
-      <button class="btn-rag-send" onclick="askRag()">Ask →</button>
-    </div>
   </div>
 
 </div>
 
-<!-- Floating action bar (plan view only) -->
-<div class="action-bar" id="actionBar">
-  <button class="btn-log-meal" onclick="openLogForm()">+ Log a meal</button>
-  <button class="btn-reset-plan" onclick="resetPlan()">↺ Reset</button>
+<!-- Sticky input bar -->
+<div class="input-bar" id="inputBar">
+  <input class="input-bar-field" id="chatInput"
+    placeholder="Tell me what you ate, or ask anything…"
+    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();handleInput();}" />
+  <button class="btn-send" id="btnSend" onclick="handleInput()">Send</button>
+  <button class="btn-reset" onclick="resetPlan()" title="Reset">↺</button>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  const API = 'http://localhost:8000';
+const API = 'http://localhost:8000';
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-  let plan     = null;
-  let menu     = null;
-  let dailyLog = {};
-  let sessionId = null;
-  let planStarted = false;
+let plan       = null;
+let menu       = null;
+let todayMenu  = null;
+let sessionId  = null;
+let planStarted = false;
+let logged     = { cal:0, pro:0, car:0, fat:0 };
+let todayTarget = { cal:0, pro:0, car:0, fat:0 };
+let activeTab  = 'plan';
 
-  // ── Init ──────────────────────────────────────────────────────────────
-  window.addEventListener('load', () => {
-    plan     = JSON.parse(localStorage.getItem('fitai_plan') || 'null');
-    if (!plan) { window.location.href = 'onboarding.html'; return; }
+// ══════════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  plan = JSON.parse(localStorage.getItem('fitai_plan') || 'null');
+  if (!plan) { location.href = 'onboarding.html'; return; }
 
-    menu     = JSON.parse(localStorage.getItem('fitai_menu') || 'null');
-    dailyLog = JSON.parse(localStorage.getItem('fitai_log_v2') || '{}');
+  menu = JSON.parse(localStorage.getItem('fitai_menu_v2') || localStorage.getItem('fitai_menu') || 'null');
 
-    sessionId = 'plan_' + new Date().toISOString().split('T')[0]; // one session per day
+  const todayIdx = new Date().getDay(); // 0=Sun
+  const dayName  = DAYS[todayIdx];
+  const dayShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][todayIdx];
+  document.getElementById('dayNameLabel').textContent = dayName;
 
-    document.getElementById('g-cal').textContent = plan.calories;
-    document.getElementById('g-pro').textContent = plan.protein;
-    document.getElementById('g-car').textContent = plan.carbs;
-    document.getElementById('g-fat').textContent = plan.fats;
-  });
+  sessionId = 'plan_' + new Date().toISOString().split('T')[0];
 
-  // ── View switching ────────────────────────────────────────────────────
-  function switchView(view) {
-    document.querySelectorAll('.view-tab').forEach((t,i) => t.classList.toggle('active',(i===0)===(view==='plan')));
-    document.getElementById('planView').style.display  = view === 'plan' ? 'block' : 'none';
-    document.getElementById('ragView').style.display   = view === 'rag'  ? 'block' : 'none';
-    document.getElementById('actionBar').style.display = view === 'plan' ? 'flex'  : 'none';
+  // Gym vs rest day
+  const gymDays = getGymDays();
+  const isGymDay = gymDays.includes(todayIdx);
+  const chip = document.getElementById('dayTypeChip');
+  chip.textContent = isGymDay ? '💪 Gym day' : '😴 Rest day';
+  chip.className   = 'day-chip ' + (isGymDay ? 'gym' : 'rest');
+
+  // Pick correct calorie target
+  todayTarget = {
+    cal: isGymDay ? (plan.gymDayCalories || plan.calories) : (plan.restDayCalories || plan.calories),
+    pro: plan.protein,
+    car: plan.carbs,
+    fat: plan.fats,
+  };
+
+  document.getElementById('t-cal').textContent = todayTarget.cal;
+  document.getElementById('t-pro').textContent = todayTarget.pro + 'g';
+  document.getElementById('t-car').textContent = todayTarget.car + 'g';
+  document.getElementById('t-fat').textContent = todayTarget.fat + 'g';
+
+  const subLabel = isGymDay
+    ? `+${todayTarget.cal - plan.calories > 0 ? todayTarget.cal - plan.calories : 0} kcal gym boost`
+    : plan.restDayCalories < plan.calories
+      ? `${plan.calories - todayTarget.cal} kcal below avg on rest day`
+      : '';
+  if (subLabel) document.getElementById('targetCardSub').textContent = subLabel;
+
+  // Load today's saved log progress
+  const savedLog = JSON.parse(localStorage.getItem(`fitai_daily_log_${sessionId}`) || 'null');
+  if (savedLog) {
+    logged = savedLog.totals || logged;
+    updateProgress();
   }
 
-  // ── Get today's menu ──────────────────────────────────────────────────
-  function getTodayMenu() {
-    if (!menu) return null;
-    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const today = days[new Date().getDay()];
-    return menu[today] || null;
+  // Load today's menu
+  todayMenu = menu ? (menu[dayName] || null) : null;
+  const hasMenu = todayMenu && Object.values(todayMenu).some(d => d.length > 0);
+  if (!hasMenu) {
+    document.getElementById('noMenuState').style.display = 'block';
+    document.getElementById('btnGenerate').style.display = 'none';
   }
 
-  // ══════════════════════════════════════════════════════════════════════
-  // PLAN AGENT
-  // ══════════════════════════════════════════════════════════════════════
-  async function startPlan() {
-    const todayMenu = getTodayMenu();
-    if (!todayMenu || !Object.values(todayMenu).some(d => d.length > 0)) {
-      document.getElementById('noMenuState').style.display = 'block';
-      document.getElementById('btnStartPlan').style.display = 'none';
-      return;
-    }
-
-    document.getElementById('btnStartPlan').disabled = true;
-    document.getElementById('btnStartPlan').textContent = '⏳ Planning…';
-    showTyping(true);
-
-    addSystemMessage('Starting meal planning session for today…');
-
-    try {
-      const res = await fetch(`${API}/plan/start`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          session_id  : sessionId,
-          goal_kcal   : plan.calories,
-          goal_protein: plan.protein,
-          goal_carbs  : plan.carbs,
-          goal_fats   : plan.fats,
-          menu        : todayMenu,
-        })
-      });
-
-      showTyping(false);
-
-      if (!res.ok) throw new Error('Backend error');
-      const data = await res.json();
-
-      planStarted = true;
-      document.getElementById('btnStartPlan').style.display = 'none';
-      document.getElementById('logForm').classList.remove('show');
-
-      renderPlanMessage(data);
-
-    } catch (err) {
-      showTyping(false);
-      addAgentMessage(`⚠️ Could not connect to the planning backend. Make sure the server is running.\n\n${err.message}`);
-      document.getElementById('btnStartPlan').disabled = false;
-      document.getElementById('btnStartPlan').textContent = '🤖 Generate today\'s meal plan';
-    }
+  // Restore plan chat if already generated today
+  const savedPlan = JSON.parse(localStorage.getItem(`fitai_plan_chat_${sessionId}`) || 'null');
+  if (savedPlan && savedPlan.messages?.length) {
+    planStarted = true;
+    document.getElementById('btnGenerate').style.display = 'none';
+    restoreChat(savedPlan.messages);
   }
+});
 
-  function renderPlanMessage(data) {
-    if (data.error) {
-      addAgentMessage(`⚠️ ${data.error}`);
-      return;
-    }
+// Map gym_days_per_week + gym_type to specific weekday indices
+function getGymDays() {
+  const n = plan.gym_days_per_week || 0;
+  if (!n) return [];
+  // Default gym days: Mon, Tue, Thu, Fri, Sat (indices 1,2,4,5,6) — take first n
+  const defaults = [1, 2, 4, 5, 6, 3, 0];
+  return defaults.slice(0, n);
+}
 
-    const summary = data.summary || '';
-    const meals = ['breakfast', 'lunch', 'dinner'];
+// ══════════════════════════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════════════════════════
+function switchTab(tab) {
+  activeTab = tab;
+  document.getElementById('planView').style.display = tab === 'plan' ? 'block' : 'none';
+  document.getElementById('ragView').style.display  = tab === 'rag'  ? 'block' : 'none';
+  document.getElementById('tab-plan').classList.toggle('active', tab === 'plan');
+  document.getElementById('tab-rag').classList.toggle('active',  tab === 'rag');
+  document.getElementById('chatInput').placeholder = tab === 'plan'
+    ? 'Tell me what you ate, or ask anything…'
+    : 'Ask about mess food, nutrition, or your plan…';
+}
 
-    let planHTML = `<div class="plan-card">`;
-    const icons  = { breakfast:'🌅', lunch:'🌞', dinner:'🌙' };
+function handleInput() {
+  if (activeTab === 'plan') sendPlanMessage();
+  else sendRag();
+}
 
-    meals.forEach(mealId => {
-      const dishes = data[mealId] || [];
-      if (!dishes.length) return;
-      planHTML += `<div class="plan-meal">
-        <div class="plan-meal-header">${icons[mealId]} ${mealId}</div>`;
-      dishes.forEach(d => {
-        planHTML += `<div class="plan-dish-row">
-          <div>
-            <div class="plan-dish-name">${d.dish}</div>
-            <div class="plan-dish-meta">${d.portions}</div>
-          </div>
-          <div class="plan-dish-kcal">~${d.estimated_kcal} kcal</div>
-        </div>`;
-      });
-      planHTML += `</div>`;
+// ══════════════════════════════════════════════════════════════════
+// PLAN — GENERATE
+// ══════════════════════════════════════════════════════════════════
+async function generatePlan() {
+  document.getElementById('btnGenerate').disabled = true;
+  document.getElementById('btnGenerate').textContent = '⏳ Planning…';
+  showPlanTyping(true);
+  addSystemMsg('Generating your meal plan for today…');
+
+  try {
+    const res = await fetch(`${API}/plan/start`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        session_id:   sessionId,
+        goal_kcal:    todayTarget.cal,
+        goal_protein: todayTarget.pro,
+        goal_carbs:   todayTarget.car,
+        goal_fats:    todayTarget.fat,
+        menu:         todayMenu,
+      })
     });
-
-    const totalKcal = data.total_estimated_kcal || '—';
-    const totalPro  = data.total_estimated_protein || '—';
-    planHTML += `<div class="plan-total">Total: <b>${totalKcal} kcal</b> · <b>${totalPro}g</b> protein</div>`;
-    planHTML += `</div>`;
-
-    addAgentMessage(summary, planHTML);
-    addSystemMessage('Tap "Log a meal" below after each meal to get adaptive suggestions.');
+    showPlanTyping(false);
+    if (!res.ok) throw new Error('Backend error ' + res.status);
+    const data = await res.json();
+    planStarted = true;
+    document.getElementById('btnGenerate').style.display = 'none';
+    renderPlan(data);
+    saveChat();
+  } catch (err) {
+    showPlanTyping(false);
+    document.getElementById('btnGenerate').disabled = false;
+    document.getElementById('btnGenerate').textContent = '✦ Generate today\'s meal plan';
+    addAgentMsg(`⚠️ Couldn't reach backend — is the server running?\n\n${err.message}`);
   }
+}
 
-  async function logAndSuggest(mealId, dish, kcal, pro) {
-    showTyping(true);
-    addUserMessage(`Logged ${dish} for ${mealId} (~${kcal} kcal, ${pro}g protein)`);
+function renderPlan(data) {
+  if (data.error) { addAgentMsg('⚠️ ' + data.error); return; }
 
-    try {
-      const res = await fetch(`${API}/plan/log`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          session_id: sessionId,
-          meal_id   : mealId,
-          dish      : dish,
-          calories  : parseFloat(kcal) || 0,
-          protein   : parseFloat(pro)  || 0,
-          carbs     : 0,
-          fats      : 0,
-        })
-      });
+  const icons  = { breakfast:'🌅', lunch:'🌞', snacks:'🍵', dinner:'🌙' };
+  const meals  = ['breakfast','lunch','snacks','dinner'];
+  let planHTML = '<div class="plan-card">';
 
-      showTyping(false);
-      if (!res.ok) throw new Error('Backend error');
-      const data = await res.json();
-
-      // Update remaining card
-      if (data.remaining) updateRemainingCard(data.remaining);
-
-      // Render suggestion
-      if (data.message) {
-        addAgentMessage(data.message);  // "All meals done!" case
-      } else if (data.next_suggestion) {
-        renderSuggestion(data.next_suggestion, data.next_meal);
-      } else {
-        addAgentMessage("✅ Logged! Keep it up.");
-      }
-
-    } catch (err) {
-      showTyping(false);
-      addAgentMessage('Could not connect to backend. Is the server running?');
-    }
-  }
-
-  function renderSuggestion(sug, nextMeal) {
-    const icons = { breakfast:'🌅', lunch:'🌞', dinner:'🌙' };
-    let html = `<div class="plan-card">
-      <div class="plan-meal-header">${icons[nextMeal] || '🍽'} Suggested ${nextMeal}</div>`;
-
-    (sug.dishes || []).forEach(d => {
-      html += `<div class="plan-dish-row">
-        <div>
-          <div class="plan-dish-name">${d.dish}</div>
-          <div class="plan-dish-meta">${d.portions}</div>
-        </div>
-        <div class="plan-dish-kcal">~${d.estimated_kcal} kcal</div>
+  meals.forEach(mId => {
+    const dishes = data[mId] || [];
+    if (!dishes.length) return;
+    planHTML += `<div class="plan-meal-head">${icons[mId]||'🍽'} ${mId}</div>`;
+    dishes.forEach(d => {
+      planHTML += `<div class="plan-dish-row">
+        <span class="plan-dish-name">${d.dish}</span>
+        <span class="plan-dish-portion">${d.portions||'1 serving'}</span>
+        <span class="plan-dish-kcal">~${d.estimated_kcal} kcal</span>
       </div>`;
     });
-    html += `<div class="plan-total">Total: <b>~${sug.total_kcal || '?'} kcal</b> · <b>${sug.total_protein || '?'}g</b> protein</div>`;
-    html += `</div>`;
+  });
 
-    addAgentMessage(sug.note || '', html);
+  const totalKcal = data.total_estimated_kcal || '—';
+  const totalPro  = data.total_estimated_protein || '—';
+  planHTML += `<div class="plan-total-row">Total: <b>${totalKcal} kcal</b> · <b>${totalPro}g protein</b></div>`;
+  planHTML += '</div>';
+
+  addAgentMsg(data.summary || 'Here\'s your plan for today:', planHTML);
+  addSystemMsg('Reply with what you actually ate — e.g. "had breakfast, skipped rice" — and I\'ll adjust.');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PLAN — CHAT (adaptive logging)
+// ══════════════════════════════════════════════════════════════════
+async function sendPlanMessage() {
+  const input = document.getElementById('chatInput');
+  const text  = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  addUserMsg(text);
+  showPlanTyping(true);
+
+  // If plan not started yet, treat first message as a trigger
+  if (!planStarted) {
+    await generatePlan();
+    showPlanTyping(false);
+    return;
   }
 
-  function updateRemainingCard(rem) {
-    document.getElementById('remainingCard').classList.add('show');
-    const pct = (v, goal) => Math.min(Math.max(((goal - v) / goal) * 100, 0), 100);
+  try {
+    const res = await fetch(`${API}/plan/log`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        session_id: sessionId,
+        user_message: text,
+        logged_so_far: logged,
+        goal: todayTarget,
+      })
+    });
+    showPlanTyping(false);
+    if (!res.ok) throw new Error('Backend error');
+    const data = await res.json();
 
-    document.getElementById('rem-cal-bar').style.width  = pct(rem.eaten_kcal, rem.goal_kcal) + '%';
-    document.getElementById('rem-pro-bar').style.width  = pct(rem.eaten_protein, rem.goal_protein) + '%';
-    document.getElementById('rem-car-bar').style.width  = pct(rem.eaten_carbs, rem.goal_carbs) + '%';
-
-    document.getElementById('rem-cal-val').textContent = `${Math.round(rem.remaining_kcal)} kcal left`;
-    document.getElementById('rem-pro-val').textContent = `${Math.round(rem.remaining_protein)}g left`;
-    document.getElementById('rem-car-val').textContent = `${Math.round(rem.remaining_carbs)}g left`;
-  }
-
-  // Log form
-  function openLogForm() {
-    document.getElementById('logForm').classList.add('show');
-    setTimeout(() => document.getElementById('lf-dish').focus(), 100);
-  }
-
-  function closeLogForm() {
-    document.getElementById('logForm').classList.remove('show');
-  }
-
-  async function submitLoggedMeal() {
-    const mealId = document.getElementById('lf-meal').value;
-    const dish   = document.getElementById('lf-dish').value.trim();
-    const kcal   = document.getElementById('lf-cal').value;
-    const pro    = document.getElementById('lf-pro').value;
-
-    if (!dish || !kcal) { showToast('Enter dish name and calories.'); return; }
-
-    closeLogForm();
-    document.getElementById('lf-dish').value = '';
-    document.getElementById('lf-cal').value  = '';
-    document.getElementById('lf-pro').value  = '';
-
-    if (!planStarted) {
-      // If plan hasn't been generated yet, start one first
-      await startPlan();
+    // Update progress if backend returned updated totals
+    if (data.updated_log) {
+      logged = data.updated_log;
+      localStorage.setItem(`fitai_daily_log_${sessionId}`, JSON.stringify({ totals: logged }));
+      updateProgress();
     }
 
-    await logAndSuggest(mealId, dish, kcal, pro);
-  }
-
-  function resetPlan() {
-    if (!confirm('Reset today\'s meal plan?')) return;
-    fetch(`${API}/plan/session/${sessionId}`, { method: 'DELETE' }).catch(() => {});
-    planStarted = false;
-    document.getElementById('chatArea').innerHTML = '';
-    document.getElementById('remainingCard').classList.remove('show');
-    document.getElementById('btnStartPlan').style.display = 'block';
-    document.getElementById('btnStartPlan').disabled = false;
-    document.getElementById('btnStartPlan').textContent = '🤖 Generate today\'s meal plan';
-    document.getElementById('noMenuState').style.display = 'none';
-    document.getElementById('logForm').classList.remove('show');
-    showToast('Plan reset.');
-  }
-
-  // ── Chat helpers ──────────────────────────────────────────────────────
-  function addAgentMessage(text, extraHTML = '') {
-    const area = document.getElementById('chatArea');
-    const div  = document.createElement('div');
-    div.className = 'msg-agent';
-    div.innerHTML = `<div class="msg-label">🤖 FitAI Agent</div>${escHtml(text)}${extraHTML}`;
-    area.appendChild(div);
-    div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  function addUserMessage(text) {
-    const area = document.getElementById('chatArea');
-    const div  = document.createElement('div');
-    div.className = 'msg-user';
-    div.textContent = text;
-    area.appendChild(div);
-  }
-
-  function addSystemMessage(text) {
-    const area = document.getElementById('chatArea');
-    const div  = document.createElement('div');
-    div.className = 'msg-system';
-    div.textContent = text;
-    area.appendChild(div);
-    div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  function showTyping(show) {
-    document.getElementById('typingIndicator').classList.toggle('show', show);
-    if (show) document.getElementById('typingIndicator').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  }
-
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/\n/g,'<br>');
-  }
-
-  // ══════════════════════════════════════════════════════════════════════
-  // RAG Q&A
-  // ══════════════════════════════════════════════════════════════════════
-  async function askRag(question) {
-    const input = document.getElementById('ragInput');
-    const q     = question || input.value.trim();
-    if (!q) return;
-    input.value = '';
-
-    // Add user bubble
-    const ragChat = document.getElementById('ragChat');
-    const userDiv = document.createElement('div');
-    userDiv.className = 'rag-msg-user';
-    userDiv.textContent = q;
-    ragChat.appendChild(userDiv);
-    userDiv.scrollIntoView({ behavior:'smooth', block:'nearest' });
-
-    // Show typing
-    document.getElementById('ragTyping').classList.add('show');
-
-    // Get today's menu for context
-    const todayMenu = getTodayMenu();
-
-    try {
-      const res = await fetch(`${API}/rag/ask`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question   : q,
-          today_menu : todayMenu || undefined,
-          user_log   : Object.keys(dailyLog).length > 0 ? dailyLog : undefined,
-          user_goal  : plan?.goal || undefined,
-        })
-      });
-
-      document.getElementById('ragTyping').classList.remove('show');
-
-      if (!res.ok) throw new Error('Backend error');
-      const data = await res.json();
-
-      const botDiv = document.createElement('div');
-      botDiv.className = 'rag-msg-bot';
-
-      const sourcesHTML = data.sources && data.sources.length > 0
-        ? `<div class="rag-sources">
-            <details>
-              <summary>📚 ${data.sources.length} source${data.sources.length > 1 ? 's' : ''} used</summary>
-              ${data.sources.map(s => `<div class="rag-source-item">${s.slice(0,120)}…</div>`).join('')}
-            </details>
-           </div>`
-        : '';
-
-      botDiv.innerHTML = `<div class="rag-label">🔍 FitAI</div>${escHtml(data.answer)}${sourcesHTML}`;
-      ragChat.appendChild(botDiv);
-      botDiv.scrollIntoView({ behavior:'smooth', block:'nearest' });
-
-    } catch (err) {
-      document.getElementById('ragTyping').classList.remove('show');
-      const errDiv = document.createElement('div');
-      errDiv.className = 'rag-msg-bot';
-      errDiv.innerHTML = `<div class="rag-label">🔍 FitAI</div>Could not reach backend. Make sure the server is running.`;
-      ragChat.appendChild(errDiv);
+    if (data.next_suggestion) {
+      renderPlan(data.next_suggestion);
+    } else {
+      addAgentMsg(data.message || data.reply || 'Got it! Keep going.');
     }
+    saveChat();
+  } catch (err) {
+    showPlanTyping(false);
+    addAgentMsg('Couldn\'t reach the backend right now. Try again in a moment.');
   }
+}
 
-  // ── Utility ───────────────────────────────────────────────────────────
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+// ══════════════════════════════════════════════════════════════════
+// PROGRESS
+// ══════════════════════════════════════════════════════════════════
+function updateProgress() {
+  const card = document.getElementById('progressCard');
+  if (logged.cal === 0) { card.classList.remove('show'); return; }
+  card.classList.add('show');
+
+  const pct = (v, t) => Math.min((v / t) * 100, 100).toFixed(1) + '%';
+
+  document.getElementById('pb-cal').style.width  = pct(logged.cal, todayTarget.cal);
+  document.getElementById('pb-pro').style.width  = pct(logged.pro, todayTarget.pro);
+  document.getElementById('pb-carb').style.width = pct(logged.car, todayTarget.car);
+
+  const remCal = Math.max(todayTarget.cal - logged.cal, 0);
+  const remPro = Math.max(todayTarget.pro - logged.pro, 0);
+  const remCar = Math.max(todayTarget.car - logged.car, 0);
+
+  document.getElementById('pv-cal').textContent  = `${Math.round(logged.cal)} / ${todayTarget.cal}`;
+  document.getElementById('pv-pro').textContent  = `${Math.round(logged.pro)}g / ${todayTarget.pro}g`;
+  document.getElementById('pv-carb').textContent = `${Math.round(logged.car)}g / ${todayTarget.car}g`;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════════════════════════
+function resetPlan() {
+  if (!confirm('Reset today\'s plan and log?')) return;
+  fetch(`${API}/plan/session/${sessionId}`, { method:'DELETE' }).catch(() => {});
+  planStarted = false;
+  logged = { cal:0, pro:0, car:0, fat:0 };
+  localStorage.removeItem(`fitai_plan_chat_${sessionId}`);
+  localStorage.removeItem(`fitai_daily_log_${sessionId}`);
+  document.getElementById('planChat').innerHTML = '';
+  document.getElementById('progressCard').classList.remove('show');
+  document.getElementById('ragChat').innerHTML = '';
+  const hasMenu = todayMenu && Object.values(todayMenu).some(d => d.length > 0);
+  document.getElementById('btnGenerate').style.display = hasMenu ? 'block' : 'none';
+  document.getElementById('btnGenerate').disabled = false;
+  document.getElementById('btnGenerate').textContent = '✦ Generate today\'s meal plan';
+  showToast('Plan reset.');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// RAG Q&A
+// ══════════════════════════════════════════════════════════════════
+async function sendRag(prefill) {
+  const input = document.getElementById('chatInput');
+  const q     = prefill || input.value.trim();
+  if (!q) return;
+  input.value = '';
+
+  const ragChat = document.getElementById('ragChat');
+  appendRagBubble(ragChat, 'user', q);
+
+  document.getElementById('ragTyping').classList.add('show');
+
+  try {
+    const res = await fetch(`${API}/rag/ask`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        question:   q,
+        today_menu: todayMenu || undefined,
+        user_log:   logged.cal > 0 ? logged : undefined,
+        user_goal:  plan?.goal || undefined,
+        target_cal: todayTarget.cal,
+        target_pro: todayTarget.pro,
+      })
+    });
+
+    document.getElementById('ragTyping').classList.remove('show');
+    if (!res.ok) throw new Error('Backend error');
+    const data = await res.json();
+
+    const sourcesHTML = (data.sources||[]).length
+      ? `<div class="rag-sources"><details><summary>📚 ${data.sources.length} source${data.sources.length>1?'s':''} used</summary>${data.sources.map(s=>`<div class="rag-source-item">${s.slice(0,120)}…</div>`).join('')}</details></div>`
+      : '';
+
+    appendRagBubble(ragChat, 'bot', data.answer, sourcesHTML);
+  } catch (err) {
+    document.getElementById('ragTyping').classList.remove('show');
+    appendRagBubble(ragChat, 'bot', 'Couldn\'t reach the backend. Is the server running?');
   }
+}
+
+function appendRagBubble(container, type, text, extraHTML = '') {
+  const div = document.createElement('div');
+  if (type === 'user') {
+    div.className = 'rag-msg-user';
+    div.textContent = text;
+  } else {
+    div.className = 'rag-msg-bot';
+    div.innerHTML = `<div class="rag-bot-label">🔍 FitAI</div>${escHtml(text)}${extraHTML}`;
+  }
+  container.appendChild(div);
+  div.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// ══════════════════════════════════════════════════════════════════
+// CHAT HELPERS
+// ══════════════════════════════════════════════════════════════════
+function addAgentMsg(text, extraHTML = '') {
+  const div = document.createElement('div');
+  div.className = 'msg-agent';
+  div.innerHTML = `<div class="msg-agent-label">✦ FitAI</div>${escHtml(text)}${extraHTML}`;
+  appendToChat(div);
+}
+
+function addUserMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'msg-user';
+  div.textContent = text;
+  appendToChat(div);
+}
+
+function addSystemMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'msg-system';
+  div.textContent = text;
+  appendToChat(div);
+}
+
+function appendToChat(el) {
+  const area = document.getElementById('planChat');
+  area.appendChild(el);
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function showPlanTyping(show) {
+  const t = document.getElementById('planTyping');
+  t.classList.toggle('show', show);
+  if (show) t.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function restoreChat(messages) {
+  messages.forEach(m => {
+    if (m.role === 'agent')  addAgentMsg(m.text, m.extraHTML || '');
+    if (m.role === 'user')   addUserMsg(m.text);
+    if (m.role === 'system') addSystemMsg(m.text);
+  });
+}
+
+// Simple chat persistence — saves text content only
+let _chatMessages = [];
+function saveChat() {
+  const nodes = document.getElementById('planChat').children;
+  const msgs = [];
+  for (const n of nodes) {
+    if (n.classList.contains('msg-agent'))  msgs.push({ role:'agent',  text: n.innerText.replace(/^✦ FITAI\n/, '') });
+    if (n.classList.contains('msg-user'))   msgs.push({ role:'user',   text: n.textContent });
+    if (n.classList.contains('msg-system')) msgs.push({ role:'system', text: n.textContent });
+  }
+  localStorage.setItem(`fitai_plan_chat_${sessionId}`, JSON.stringify({ messages: msgs }));
+}
+
+// ══════════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\n/g,'<br>');
+}
 </script>
 </body>
 </html>

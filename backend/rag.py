@@ -35,13 +35,14 @@ CHROMA_DIR    = Path(__file__).parent / ".chroma_db"
 COLLECTION    = "fitai_nutrition"
 EMBED_MODEL   = "all-MiniLM-L6-v2"    # 80MB, fast, good for short text
 TOP_K         = 4                      # chunks to retrieve
-MAX_CONTEXT   = 1200                   # chars of context passed to LLM
+MAX_CONTEXT   = 1000                   # chars of context passed to LLM
 
 # ── Singletons ─────────────────────────────────────────────────────────────────
 _chroma_client     = None
 _collection        = None
 _embed_model       = None
 _db_populated      = False
+_last_context_hash = None   # avoid re-upserting identical menu/log data
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -195,8 +196,18 @@ def upsert_context(today_menu: Optional[dict] = None,
                    user_log: Optional[dict] = None) -> None:
     """
     Upsert dynamic context (menu + log) into the collection.
-    Called at query time so context is always fresh.
+    Skips the upsert if the data hasn't changed since last call (hash check).
     """
+    global _last_context_hash
+    import hashlib
+
+    # Build a cheap hash of the incoming data to detect changes
+    raw = json.dumps({"menu": today_menu, "log": user_log}, sort_keys=True, default=str)
+    current_hash = hashlib.md5(raw.encode()).hexdigest()
+    if current_hash == _last_context_hash:
+        log.debug("Context unchanged — skipping upsert")
+        return
+
     col    = _get_collection()
     ids, texts, metas = [], [], []
 
@@ -212,6 +223,8 @@ def upsert_context(today_menu: Optional[dict] = None,
         embeddings = _embed(texts)
         col.upsert(ids=ids, documents=texts, embeddings=embeddings, metadatas=metas)
         log.debug(f"Upserted {len(ids)} context chunks into ChromaDB")
+
+    _last_context_hash = current_hash
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -241,8 +254,9 @@ def _hf_call(prompt: str) -> Optional[str]:
     if not hf_key:
         return None
 
+    # Fast models first: Mistral-7B responds in ~2-3s and is always warm
     models = [
-        "Qwen/Qwen2.5-72B-Instruct",
+        "mistralai/Mistral-7B-Instruct-v0.3",
         "mistralai/Mixtral-8x7B-Instruct-v0.1",
         "meta-llama/Llama-3.2-3B-Instruct",
     ]
@@ -256,10 +270,10 @@ def _hf_call(prompt: str) -> Optional[str]:
                     "model"      : model,
                     "messages"   : [{"role": "user", "content": prompt}],
                     "temperature": 0.3,
-                    "max_tokens" : 500,
+                    "max_tokens" : 250,   # was 500 — shorter = faster
                 },
                 headers=headers,
-                timeout=40,
+                timeout=30,   # was 40
             )
             if resp.status_code == 200:
                 return resp.json()["choices"][0]["message"]["content"].strip()
