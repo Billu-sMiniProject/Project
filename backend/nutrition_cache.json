@@ -1,0 +1,1971 @@
+{
+  "dahi_vada": {
+    "dish": "dahi_vada",
+    "calories": 270.0,
+    "protein": 9.8,
+    "carbs": 42.0,
+    "fats": 7.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "aloo_dum": {
+    "dish": "aloo_dum",
+    "calories": 165.0,
+    "protein": 3.3,
+    "carbs": 27.0,
+    "fats": 5.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "onion_sev": {
+    "dish": "onion_sev",
+    "calories": 336.0,
+    "protein": 6.4,
+    "carbs": 41.6,
+    "fats": 16.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "corn_flakes": {
+    "dish": "corn_flakes",
+    "calories": 142.8,
+    "protein": 2.8,
+    "carbs": 33.6,
+    "fats": 0.2,
+    "portion_g": 40,
+    "source": "lookup_table"
+  },
+  "corn_flakes_with_milk_and_banana": {
+    "dish": "corn_flakes_with_milk_and_banana",
+    "calories": 406.0,
+    "protein": 15.4,
+    "carbs": 78.4,
+    "fats": 5.6,
+    "portion_g": 280,
+    "source": "lookup_table"
+  },
+  "coffee": {
+    "dish": "coffee",
+    "calories": 52.5,
+    "protein": 1.8,
+    "carbs": 6.8,
+    "fats": 1.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "tea": {
+    "dish": "tea",
+    "calories": 45.0,
+    "protein": 1.2,
+    "carbs": 6.0,
+    "fats": 1.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "maggi": {
+    "dish": "maggi",
+    "calories": 500.5,
+    "protein": 10.4,
+    "carbs": 68.9,
+    "fats": 20.8,
+    "portion_g": 130,
+    "source": "lookup_table"
+  },
+  "uttapam": {
+    "dish": "uttapam",
+    "calories": 204.0,
+    "protein": 6.0,
+    "carbs": 36.0,
+    "fats": 4.2,
+    "portion_g": 120,
+    "source": "lookup_table"
+  },
+  "sambar": {
+    "dish": "sambar",
+    "calories": 82.5,
+    "protein": 4.2,
+    "carbs": 12.8,
+    "fats": 1.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chutney": {
+    "dish": "chutney",
+    "calories": 18.0,
+    "protein": 0.3,
+    "carbs": 2.4,
+    "fats": 0.8,
+    "portion_g": 30,
+    "source": "lookup_table"
+  },
+  "bread": {
+    "dish": "bread",
+    "calories": 159.0,
+    "protein": 5.4,
+    "carbs": 30.6,
+    "fats": 1.9,
+    "portion_g": 60,
+    "source": "lookup_table"
+  },
+  "butter": {
+    "dish": "butter",
+    "calories": 71.7,
+    "protein": 0.1,
+    "carbs": 0.0,
+    "fats": 8.1,
+    "portion_g": 10,
+    "source": "lookup_table"
+  },
+  "jam": {
+    "dish": "jam",
+    "calories": 50.0,
+    "protein": 0.1,
+    "carbs": 12.4,
+    "fats": 0.0,
+    "portion_g": 20,
+    "source": "lookup_table"
+  },
+  "cutlet": {
+    "dish": "cutlet",
+    "calories": 220.0,
+    "protein": 8.0,
+    "carbs": 22.0,
+    "fats": 11.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "egg_omelette": {
+    "dish": "egg_omelette",
+    "calories": 185.0,
+    "protein": 12.0,
+    "carbs": 1.5,
+    "fats": 14.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "omelette": {
+    "dish": "omelette",
+    "calories": 185.0,
+    "protein": 12.0,
+    "carbs": 1.5,
+    "fats": 14.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "cheese_omelette": {
+    "dish": "cheese_omelette",
+    "calories": 276.0,
+    "protein": 18.0,
+    "carbs": 2.4,
+    "fats": 21.6,
+    "portion_g": 120,
+    "source": "lookup_table"
+  },
+  "upma": {
+    "dish": "upma",
+    "calories": 260.0,
+    "protein": 7.0,
+    "carbs": 44.0,
+    "fats": 7.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "ghugni": {
+    "dish": "ghugni",
+    "calories": 210.0,
+    "protein": 11.2,
+    "carbs": 33.0,
+    "fats": 4.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "idli": {
+    "dish": "idli",
+    "calories": 87.0,
+    "protein": 3.0,
+    "carbs": 18.0,
+    "fats": 0.6,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "boiled_egg": {
+    "dish": "boiled_egg",
+    "calories": 93.0,
+    "protein": 7.8,
+    "carbs": 0.7,
+    "fats": 6.6,
+    "portion_g": 60,
+    "source": "lookup_table"
+  },
+  "vada": {
+    "dish": "vada",
+    "calories": 240.0,
+    "protein": 5.6,
+    "carbs": 28.0,
+    "fats": 12.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "medu_vada": {
+    "dish": "medu_vada",
+    "calories": 240.0,
+    "protein": 5.6,
+    "carbs": 28.0,
+    "fats": 12.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "veg_chowmein": {
+    "dish": "veg_chowmein",
+    "calories": 400.0,
+    "protein": 11.2,
+    "carbs": 70.0,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "dosa": {
+    "dish": "dosa",
+    "calories": 168.0,
+    "protein": 3.8,
+    "carbs": 30.0,
+    "fats": 4.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "masala_dosa": {
+    "dish": "masala_dosa",
+    "calories": 350.0,
+    "protein": 8.4,
+    "carbs": 60.0,
+    "fats": 11.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "paneer_dosa": {
+    "dish": "paneer_dosa",
+    "calories": 360.0,
+    "protein": 14.4,
+    "carbs": 50.4,
+    "fats": 12.6,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "cheese_dosa": {
+    "dish": "cheese_dosa",
+    "calories": 378.0,
+    "protein": 12.6,
+    "carbs": 50.4,
+    "fats": 16.2,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "poha": {
+    "dish": "poha",
+    "calories": 165.0,
+    "protein": 3.8,
+    "carbs": 33.0,
+    "fats": 3.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "rusk": {
+    "dish": "rusk",
+    "calories": 120.0,
+    "protein": 2.7,
+    "carbs": 21.6,
+    "fats": 2.7,
+    "portion_g": 30,
+    "source": "lookup_table"
+  },
+  "rice": {
+    "dish": "rice",
+    "calories": 260.0,
+    "protein": 5.4,
+    "carbs": 56.0,
+    "fats": 0.6,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "roti": {
+    "dish": "roti",
+    "calories": 118.8,
+    "protein": 3.2,
+    "carbs": 22.8,
+    "fats": 1.6,
+    "portion_g": 40,
+    "source": "lookup_table"
+  },
+  "chapati": {
+    "dish": "chapati",
+    "calories": 118.8,
+    "protein": 3.2,
+    "carbs": 22.8,
+    "fats": 1.6,
+    "portion_g": 40,
+    "source": "lookup_table"
+  },
+  "naan": {
+    "dish": "naan",
+    "calories": 279.0,
+    "protein": 8.1,
+    "carbs": 50.4,
+    "fats": 5.4,
+    "portion_g": 90,
+    "source": "lookup_table"
+  },
+  "puri": {
+    "dish": "puri",
+    "calories": 119.0,
+    "protein": 2.1,
+    "carbs": 15.7,
+    "fats": 5.2,
+    "portion_g": 35,
+    "source": "lookup_table"
+  },
+  "jeera_rice": {
+    "dish": "jeera_rice",
+    "calories": 296.0,
+    "protein": 5.6,
+    "carbs": 60.0,
+    "fats": 5.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "khichdi": {
+    "dish": "khichdi",
+    "calories": 300.0,
+    "protein": 11.2,
+    "carbs": 55.0,
+    "fats": 6.2,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "sabudana_khichdi": {
+    "dish": "sabudana_khichdi",
+    "calories": 400.0,
+    "protein": 4.0,
+    "carbs": 84.0,
+    "fats": 8.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "veg_biryani": {
+    "dish": "veg_biryani",
+    "calories": 510.0,
+    "protein": 12.0,
+    "carbs": 96.0,
+    "fats": 12.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "non_veg_biryani": {
+    "dish": "non_veg_biryani",
+    "calories": 665.0,
+    "protein": 35.0,
+    "carbs": 98.0,
+    "fats": 19.2,
+    "portion_g": 350,
+    "source": "lookup_table"
+  },
+  "chicken_biryani": {
+    "dish": "chicken_biryani",
+    "calories": 665.0,
+    "protein": 42.0,
+    "carbs": 94.5,
+    "fats": 19.2,
+    "portion_g": 350,
+    "source": "lookup_table"
+  },
+  "egg_biryani": {
+    "dish": "egg_biryani",
+    "calories": 525.0,
+    "protein": 24.0,
+    "carbs": 84.0,
+    "fats": 15.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "paneer_biryani": {
+    "dish": "paneer_biryani",
+    "calories": 585.0,
+    "protein": 24.0,
+    "carbs": 84.0,
+    "fats": 21.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "dal": {
+    "dish": "dal",
+    "calories": 174.0,
+    "protein": 9.8,
+    "carbs": 27.0,
+    "fats": 4.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "dal_fry": {
+    "dish": "dal_fry",
+    "calories": 180.0,
+    "protein": 10.2,
+    "carbs": 26.2,
+    "fats": 5.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "dal_tadka": {
+    "dish": "dal_tadka",
+    "calories": 174.0,
+    "protein": 9.8,
+    "carbs": 27.0,
+    "fats": 4.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "moong_dal": {
+    "dish": "moong_dal",
+    "calories": 157.5,
+    "protein": 10.8,
+    "carbs": 24.0,
+    "fats": 2.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "rajma": {
+    "dish": "rajma",
+    "calories": 190.5,
+    "protein": 13.0,
+    "carbs": 33.0,
+    "fats": 0.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chole": {
+    "dish": "chole",
+    "calories": 246.0,
+    "protein": 13.4,
+    "carbs": 40.5,
+    "fats": 3.9,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chana_masala": {
+    "dish": "chana_masala",
+    "calories": 246.0,
+    "protein": 13.4,
+    "carbs": 40.5,
+    "fats": 3.9,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "besan_aloo_curry": {
+    "dish": "besan_aloo_curry",
+    "calories": 157.5,
+    "protein": 5.2,
+    "carbs": 24.0,
+    "fats": 5.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "soyabean_aloo_curry": {
+    "dish": "soyabean_aloo_curry",
+    "calories": 168.0,
+    "protein": 9.0,
+    "carbs": 21.0,
+    "fats": 6.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "aloo_chips": {
+    "dish": "aloo_chips",
+    "calories": 156.0,
+    "protein": 1.8,
+    "carbs": 22.5,
+    "fats": 6.5,
+    "portion_g": 50,
+    "source": "lookup_table"
+  },
+  "jeera_aloo": {
+    "dish": "jeera_aloo",
+    "calories": 142.5,
+    "protein": 3.0,
+    "carbs": 22.5,
+    "fats": 5.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "aloo_fry": {
+    "dish": "aloo_fry",
+    "calories": 172.5,
+    "protein": 3.0,
+    "carbs": 25.5,
+    "fats": 6.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "aloo_gobi": {
+    "dish": "aloo_gobi",
+    "calories": 135.0,
+    "protein": 3.8,
+    "carbs": 21.0,
+    "fats": 4.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "mix_fry_bhaja": {
+    "dish": "mix_fry_bhaja",
+    "calories": 130.0,
+    "protein": 2.5,
+    "carbs": 15.0,
+    "fats": 7.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "seasonal_bhaja": {
+    "dish": "seasonal_bhaja",
+    "calories": 120.0,
+    "protein": 2.0,
+    "carbs": 14.0,
+    "fats": 6.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "mixed_boiled_vegetables": {
+    "dish": "mixed_boiled_vegetables",
+    "calories": 60.0,
+    "protein": 3.0,
+    "carbs": 10.5,
+    "fats": 0.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "veg_jaipuri": {
+    "dish": "veg_jaipuri",
+    "calories": 165.0,
+    "protein": 5.2,
+    "carbs": 21.0,
+    "fats": 6.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "veg_manchurian": {
+    "dish": "veg_manchurian",
+    "calories": 290.0,
+    "protein": 7.6,
+    "carbs": 36.0,
+    "fats": 13.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "gobi_manchurian": {
+    "dish": "gobi_manchurian",
+    "calories": 202.5,
+    "protein": 5.2,
+    "carbs": 25.5,
+    "fats": 9.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "malai_kofta": {
+    "dish": "malai_kofta",
+    "calories": 400.0,
+    "protein": 12.0,
+    "carbs": 36.0,
+    "fats": 24.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "ambula_rai": {
+    "dish": "ambula_rai",
+    "calories": 60.0,
+    "protein": 1.5,
+    "carbs": 10.0,
+    "fats": 2.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "paneer": {
+    "dish": "paneer",
+    "calories": 265.0,
+    "protein": 18.0,
+    "carbs": 2.0,
+    "fats": 21.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "paneer_butter_masala": {
+    "dish": "paneer_butter_masala",
+    "calories": 396.0,
+    "protein": 20.0,
+    "carbs": 24.0,
+    "fats": 26.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "palak_paneer": {
+    "dish": "palak_paneer",
+    "calories": 312.0,
+    "protein": 18.0,
+    "carbs": 16.0,
+    "fats": 20.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "paneer_bhurji": {
+    "dish": "paneer_bhurji",
+    "calories": 285.0,
+    "protein": 16.5,
+    "carbs": 7.5,
+    "fats": 21.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chilli_paneer": {
+    "dish": "chilli_paneer",
+    "calories": 350.0,
+    "protein": 18.0,
+    "carbs": 28.0,
+    "fats": 19.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "paneer_hyderabadi": {
+    "dish": "paneer_hyderabadi",
+    "calories": 420.0,
+    "protein": 20.0,
+    "carbs": 28.0,
+    "fats": 26.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "paneer_tikka": {
+    "dish": "paneer_tikka",
+    "calories": 330.0,
+    "protein": 21.0,
+    "carbs": 12.0,
+    "fats": 22.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "paneer_manchurian": {
+    "dish": "paneer_manchurian",
+    "calories": 370.0,
+    "protein": 20.0,
+    "carbs": 28.0,
+    "fats": 20.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "paneer_momos": {
+    "dish": "paneer_momos",
+    "calories": 262.5,
+    "protein": 12.0,
+    "carbs": 33.0,
+    "fats": 9.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "fish_masala": {
+    "dish": "fish_masala",
+    "calories": 217.5,
+    "protein": 27.0,
+    "carbs": 7.5,
+    "fats": 9.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "fish_besar": {
+    "dish": "fish_besar",
+    "calories": 207.0,
+    "protein": 25.5,
+    "carbs": 6.0,
+    "fats": 9.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chicken_65": {
+    "dish": "chicken_65",
+    "calories": 345.0,
+    "protein": 27.0,
+    "carbs": 15.0,
+    "fats": 19.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chicken_mughlai": {
+    "dish": "chicken_mughlai",
+    "calories": 390.0,
+    "protein": 40.0,
+    "carbs": 12.0,
+    "fats": 22.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "chicken_curry": {
+    "dish": "chicken_curry",
+    "calories": 330.0,
+    "protein": 36.0,
+    "carbs": 10.0,
+    "fats": 17.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "egg_curry": {
+    "dish": "egg_curry",
+    "calories": 217.5,
+    "protein": 16.5,
+    "carbs": 6.0,
+    "fats": 14.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chicken_tikka": {
+    "dish": "chicken_tikka",
+    "calories": 292.5,
+    "protein": 33.0,
+    "carbs": 6.0,
+    "fats": 15.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "seekh_kebab": {
+    "dish": "seekh_kebab",
+    "calories": 252.0,
+    "protein": 21.6,
+    "carbs": 9.6,
+    "fats": 14.4,
+    "portion_g": 120,
+    "source": "lookup_table"
+  },
+  "anda_bhurji": {
+    "dish": "anda_bhurji",
+    "calories": 216.0,
+    "protein": 13.2,
+    "carbs": 3.6,
+    "fats": 15.6,
+    "portion_g": 120,
+    "source": "lookup_table"
+  },
+  "tomato_chutney": {
+    "dish": "tomato_chutney",
+    "calories": 16.5,
+    "protein": 0.3,
+    "carbs": 2.7,
+    "fats": 0.4,
+    "portion_g": 30,
+    "source": "lookup_table"
+  },
+  "salad": {
+    "dish": "salad",
+    "calories": 20.0,
+    "protein": 1.0,
+    "carbs": 4.0,
+    "fats": 0.2,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "achaar": {
+    "dish": "achaar",
+    "calories": 14.2,
+    "protein": 0.1,
+    "carbs": 1.5,
+    "fats": 0.9,
+    "portion_g": 15,
+    "source": "lookup_table"
+  },
+  "papad": {
+    "dish": "papad",
+    "calories": 35.0,
+    "protein": 1.6,
+    "carbs": 5.9,
+    "fats": 0.5,
+    "portion_g": 10,
+    "source": "lookup_table"
+  },
+  "bundi": {
+    "dish": "bundi",
+    "calories": 108.0,
+    "protein": 2.4,
+    "carbs": 15.0,
+    "fats": 4.2,
+    "portion_g": 30,
+    "source": "lookup_table"
+  },
+  "raita": {
+    "dish": "raita",
+    "calories": 60.0,
+    "protein": 2.5,
+    "carbs": 6.0,
+    "fats": 2.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "chuda_bhaja": {
+    "dish": "chuda_bhaja",
+    "calories": 205.0,
+    "protein": 3.5,
+    "carbs": 29.0,
+    "fats": 8.5,
+    "portion_g": 50,
+    "source": "lookup_table"
+  },
+  "corn_black_chana_sprout": {
+    "dish": "corn_black_chana_sprout",
+    "calories": 105.0,
+    "protein": 5.5,
+    "carbs": 18.0,
+    "fats": 1.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "gulab_jamun": {
+    "dish": "gulab_jamun",
+    "calories": 192.0,
+    "protein": 2.7,
+    "carbs": 33.0,
+    "fats": 6.0,
+    "portion_g": 60,
+    "source": "lookup_table"
+  },
+  "rasgulla": {
+    "dish": "rasgulla",
+    "calories": 186.0,
+    "protein": 3.5,
+    "carbs": 43.0,
+    "fats": 0.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "ice_cream": {
+    "dish": "ice_cream",
+    "calories": 207.0,
+    "protein": 3.5,
+    "carbs": 24.0,
+    "fats": 11.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "semiya_kheer": {
+    "dish": "semiya_kheer",
+    "calories": 225.0,
+    "protein": 6.0,
+    "carbs": 39.0,
+    "fats": 6.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "rice_kheer": {
+    "dish": "rice_kheer",
+    "calories": 217.5,
+    "protein": 6.0,
+    "carbs": 37.5,
+    "fats": 6.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "amra_sweet": {
+    "dish": "amra_sweet",
+    "calories": 104.0,
+    "protein": 0.8,
+    "carbs": 24.0,
+    "fats": 1.2,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "gajar_halwa": {
+    "dish": "gajar_halwa",
+    "calories": 315.0,
+    "protein": 6.0,
+    "carbs": 48.0,
+    "fats": 12.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "jalebi": {
+    "dish": "jalebi",
+    "calories": 296.0,
+    "protein": 1.6,
+    "carbs": 52.0,
+    "fats": 8.8,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "imarti": {
+    "dish": "imarti",
+    "calories": 288.0,
+    "protein": 2.4,
+    "carbs": 50.4,
+    "fats": 8.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "rabri": {
+    "dish": "rabri",
+    "calories": 322.5,
+    "protein": 9.0,
+    "carbs": 42.0,
+    "fats": 14.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "kulfi": {
+    "dish": "kulfi",
+    "calories": 180.0,
+    "protein": 4.0,
+    "carbs": 20.8,
+    "fats": 9.6,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "malai_kulfi": {
+    "dish": "malai_kulfi",
+    "calories": 184.0,
+    "protein": 4.4,
+    "carbs": 20.8,
+    "fats": 10.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "paan_kulfi": {
+    "dish": "paan_kulfi",
+    "calories": 176.0,
+    "protein": 3.6,
+    "carbs": 21.6,
+    "fats": 9.2,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "ghewar": {
+    "dish": "ghewar",
+    "calories": 308.0,
+    "protein": 4.0,
+    "carbs": 46.4,
+    "fats": 12.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "falooda": {
+    "dish": "falooda",
+    "calories": 540.0,
+    "protein": 13.5,
+    "carbs": 99.0,
+    "fats": 12.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "pani_puri": {
+    "dish": "pani_puri",
+    "calories": 180.0,
+    "protein": 3.5,
+    "carbs": 28.0,
+    "fats": 6.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "bhel_puri": {
+    "dish": "bhel_puri",
+    "calories": 232.5,
+    "protein": 6.0,
+    "carbs": 42.0,
+    "fats": 5.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "sev_puri": {
+    "dish": "sev_puri",
+    "calories": 222.0,
+    "protein": 5.4,
+    "carbs": 31.2,
+    "fats": 9.0,
+    "portion_g": 120,
+    "source": "lookup_table"
+  },
+  "dahi_puri": {
+    "dish": "dahi_puri",
+    "calories": 292.5,
+    "protein": 8.2,
+    "carbs": 45.0,
+    "fats": 9.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "aloo_tikki_chaat": {
+    "dish": "aloo_tikki_chaat",
+    "calories": 285.0,
+    "protein": 6.8,
+    "carbs": 45.0,
+    "fats": 10.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "papdi_chaat": {
+    "dish": "papdi_chaat",
+    "calories": 300.0,
+    "protein": 7.5,
+    "carbs": 45.0,
+    "fats": 11.2,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "raj_kachori": {
+    "dish": "raj_kachori",
+    "calories": 560.0,
+    "protein": 14.0,
+    "carbs": 76.0,
+    "fats": 22.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "samosa": {
+    "dish": "samosa",
+    "calories": 183.4,
+    "protein": 3.1,
+    "carbs": 21.0,
+    "fats": 9.8,
+    "portion_g": 70,
+    "source": "lookup_table"
+  },
+  "samosa_chaat": {
+    "dish": "samosa_chaat",
+    "calories": 480.0,
+    "protein": 12.0,
+    "carbs": 68.0,
+    "fats": 20.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "kachori": {
+    "dish": "kachori",
+    "calories": 248.0,
+    "protein": 4.0,
+    "carbs": 30.4,
+    "fats": 12.0,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "pyaz_kachori": {
+    "dish": "pyaz_kachori",
+    "calories": 252.0,
+    "protein": 4.4,
+    "carbs": 29.6,
+    "fats": 12.8,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "dal_kachori": {
+    "dish": "dal_kachori",
+    "calories": 244.0,
+    "protein": 5.2,
+    "carbs": 28.8,
+    "fats": 11.2,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "jhal_muri": {
+    "dish": "jhal_muri",
+    "calories": 120.0,
+    "protein": 3.0,
+    "carbs": 20.0,
+    "fats": 3.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "chaat_corn": {
+    "dish": "chaat_corn",
+    "calories": 172.5,
+    "protein": 3.8,
+    "carbs": 33.0,
+    "fats": 3.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "butter_corn": {
+    "dish": "butter_corn",
+    "calories": 195.0,
+    "protein": 3.8,
+    "carbs": 31.5,
+    "fats": 6.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "roasted_corn": {
+    "dish": "roasted_corn",
+    "calories": 95.0,
+    "protein": 3.0,
+    "carbs": 19.0,
+    "fats": 1.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "vada_pav": {
+    "dish": "vada_pav",
+    "calories": 435.0,
+    "protein": 10.5,
+    "carbs": 63.0,
+    "fats": 15.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "dabeli": {
+    "dish": "dabeli",
+    "calories": 338.0,
+    "protein": 7.8,
+    "carbs": 52.0,
+    "fats": 11.7,
+    "portion_g": 130,
+    "source": "lookup_table"
+  },
+  "pav_bhaji": {
+    "dish": "pav_bhaji",
+    "calories": 660.0,
+    "protein": 18.0,
+    "carbs": 105.0,
+    "fats": 22.5,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "tawa_pulav": {
+    "dish": "tawa_pulav",
+    "calories": 412.5,
+    "protein": 10.0,
+    "carbs": 75.0,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "misal_pav": {
+    "dish": "misal_pav",
+    "calories": 750.0,
+    "protein": 27.0,
+    "carbs": 114.0,
+    "fats": 22.5,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "chole_bhature": {
+    "dish": "chole_bhature",
+    "calories": 990.0,
+    "protein": 30.0,
+    "carbs": 144.0,
+    "fats": 36.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "kulche_chole": {
+    "dish": "kulche_chole",
+    "calories": 930.0,
+    "protein": 30.0,
+    "carbs": 150.0,
+    "fats": 24.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "bread_pakora": {
+    "dish": "bread_pakora",
+    "calories": 265.0,
+    "protein": 7.0,
+    "carbs": 34.0,
+    "fats": 12.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "aloo_bonda": {
+    "dish": "aloo_bonda",
+    "calories": 168.0,
+    "protein": 3.2,
+    "carbs": 22.4,
+    "fats": 7.6,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "mirchi_bajji": {
+    "dish": "mirchi_bajji",
+    "calories": 148.0,
+    "protein": 2.8,
+    "carbs": 19.2,
+    "fats": 6.8,
+    "portion_g": 80,
+    "source": "lookup_table"
+  },
+  "pakora": {
+    "dish": "pakora",
+    "calories": 235.0,
+    "protein": 5.0,
+    "carbs": 26.0,
+    "fats": 12.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "onion_pakora": {
+    "dish": "onion_pakora",
+    "calories": 225.0,
+    "protein": 4.5,
+    "carbs": 25.0,
+    "fats": 11.5,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "moong_dal_pakora": {
+    "dish": "moong_dal_pakora",
+    "calories": 245.0,
+    "protein": 8.0,
+    "carbs": 26.0,
+    "fats": 12.0,
+    "portion_g": 100,
+    "source": "lookup_table"
+  },
+  "pasta": {
+    "dish": "pasta",
+    "calories": 310.0,
+    "protein": 10.0,
+    "carbs": 56.0,
+    "fats": 5.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "white_sauce_pasta": {
+    "dish": "white_sauce_pasta",
+    "calories": 475.0,
+    "protein": 16.2,
+    "carbs": 70.0,
+    "fats": 17.5,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "red_sauce_pasta": {
+    "dish": "red_sauce_pasta",
+    "calories": 425.0,
+    "protein": 13.8,
+    "carbs": 75.0,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "veg_shawarma": {
+    "dish": "veg_shawarma",
+    "calories": 560.0,
+    "protein": 14.0,
+    "carbs": 80.0,
+    "fats": 20.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "paneer_shawarma": {
+    "dish": "paneer_shawarma",
+    "calories": 704.0,
+    "protein": 26.4,
+    "carbs": 83.6,
+    "fats": 28.6,
+    "portion_g": 220,
+    "source": "lookup_table"
+  },
+  "chicken_shawarma": {
+    "dish": "chicken_shawarma",
+    "calories": 748.0,
+    "protein": 39.6,
+    "carbs": 77.0,
+    "fats": 30.8,
+    "portion_g": 220,
+    "source": "lookup_table"
+  },
+  "egg_shawarma": {
+    "dish": "egg_shawarma",
+    "calories": 600.0,
+    "protein": 24.0,
+    "carbs": 74.0,
+    "fats": 24.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "veg_roll": {
+    "dish": "veg_roll",
+    "calories": 432.0,
+    "protein": 9.9,
+    "carbs": 68.4,
+    "fats": 13.5,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "paneer_roll": {
+    "dish": "paneer_roll",
+    "calories": 580.0,
+    "protein": 20.0,
+    "carbs": 74.0,
+    "fats": 22.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "chicken_roll": {
+    "dish": "chicken_roll",
+    "calories": 600.0,
+    "protein": 30.0,
+    "carbs": 70.0,
+    "fats": 22.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "egg_roll": {
+    "dish": "egg_roll",
+    "calories": 477.0,
+    "protein": 18.0,
+    "carbs": 63.0,
+    "fats": 17.1,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "kathi_roll": {
+    "dish": "kathi_roll",
+    "calories": 570.0,
+    "protein": 18.0,
+    "carbs": 76.0,
+    "fats": 20.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "frankie": {
+    "dish": "frankie",
+    "calories": 486.0,
+    "protein": 14.4,
+    "carbs": 68.4,
+    "fats": 17.1,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "egg_kathi_roll": {
+    "dish": "egg_kathi_roll",
+    "calories": 495.0,
+    "protein": 19.8,
+    "carbs": 64.8,
+    "fats": 17.1,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "veg_burger": {
+    "dish": "veg_burger",
+    "calories": 522.0,
+    "protein": 12.6,
+    "carbs": 75.6,
+    "fats": 18.0,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "aloo_tikki_burger": {
+    "dish": "aloo_tikki_burger",
+    "calories": 531.0,
+    "protein": 11.7,
+    "carbs": 77.4,
+    "fats": 19.8,
+    "portion_g": 180,
+    "source": "lookup_table"
+  },
+  "chicken_burger": {
+    "dish": "chicken_burger",
+    "calories": 720.0,
+    "protein": 36.0,
+    "carbs": 76.0,
+    "fats": 30.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "veg_sandwich": {
+    "dish": "veg_sandwich",
+    "calories": 315.0,
+    "protein": 9.0,
+    "carbs": 48.0,
+    "fats": 9.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "grilled_sandwich": {
+    "dish": "grilled_sandwich",
+    "calories": 367.5,
+    "protein": 12.0,
+    "carbs": 49.5,
+    "fats": 13.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "cheese_sandwich": {
+    "dish": "cheese_sandwich",
+    "calories": 397.5,
+    "protein": 15.0,
+    "carbs": 48.0,
+    "fats": 16.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "egg_chowmein": {
+    "dish": "egg_chowmein",
+    "calories": 462.5,
+    "protein": 20.0,
+    "carbs": 70.0,
+    "fats": 13.8,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "chicken_chowmein": {
+    "dish": "chicken_chowmein",
+    "calories": 500.0,
+    "protein": 30.0,
+    "carbs": 65.0,
+    "fats": 13.8,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "veg_fried_rice": {
+    "dish": "veg_fried_rice",
+    "calories": 387.5,
+    "protein": 8.8,
+    "carbs": 70.0,
+    "fats": 8.8,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "egg_fried_rice": {
+    "dish": "egg_fried_rice",
+    "calories": 437.5,
+    "protein": 17.5,
+    "carbs": 67.5,
+    "fats": 11.2,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "chicken_fried_rice": {
+    "dish": "chicken_fried_rice",
+    "calories": 475.0,
+    "protein": 25.0,
+    "carbs": 65.0,
+    "fats": 11.2,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "chicken_manchurian": {
+    "dish": "chicken_manchurian",
+    "calories": 370.0,
+    "protein": 28.0,
+    "carbs": 24.0,
+    "fats": 18.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "chilli_chicken": {
+    "dish": "chilli_chicken",
+    "calories": 420.0,
+    "protein": 32.0,
+    "carbs": 24.0,
+    "fats": 22.0,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "hakka_noodles": {
+    "dish": "hakka_noodles",
+    "calories": 412.5,
+    "protein": 12.5,
+    "carbs": 70.0,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "schezwan_noodles": {
+    "dish": "schezwan_noodles",
+    "calories": 437.5,
+    "protein": 12.5,
+    "carbs": 70.0,
+    "fats": 12.5,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "veg_momos": {
+    "dish": "veg_momos",
+    "calories": 232.5,
+    "protein": 8.2,
+    "carbs": 33.0,
+    "fats": 7.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "chicken_momos": {
+    "dish": "chicken_momos",
+    "calories": 262.5,
+    "protein": 15.0,
+    "carbs": 30.0,
+    "fats": 9.0,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "tandoori_momos": {
+    "dish": "tandoori_momos",
+    "calories": 300.0,
+    "protein": 13.5,
+    "carbs": 33.0,
+    "fats": 12.8,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "fried_momos": {
+    "dish": "fried_momos",
+    "calories": 330.0,
+    "protein": 10.5,
+    "carbs": 36.0,
+    "fats": 16.5,
+    "portion_g": 150,
+    "source": "lookup_table"
+  },
+  "lassi": {
+    "dish": "lassi",
+    "calories": 250.0,
+    "protein": 8.8,
+    "carbs": 30.0,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "sweet_lassi": {
+    "dish": "sweet_lassi",
+    "calories": 287.5,
+    "protein": 8.8,
+    "carbs": 40.0,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "salted_lassi": {
+    "dish": "salted_lassi",
+    "calories": 200.0,
+    "protein": 8.8,
+    "carbs": 17.5,
+    "fats": 10.0,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "mango_lassi": {
+    "dish": "mango_lassi",
+    "calories": 325.0,
+    "protein": 7.5,
+    "carbs": 55.0,
+    "fats": 8.8,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "buttermilk": {
+    "dish": "buttermilk",
+    "calories": 100.0,
+    "protein": 7.5,
+    "carbs": 12.5,
+    "fats": 2.5,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "sugarcane_juice": {
+    "dish": "sugarcane_juice",
+    "calories": 162.5,
+    "protein": 0.5,
+    "carbs": 40.0,
+    "fats": 0.2,
+    "portion_g": 250,
+    "source": "lookup_table"
+  },
+  "lemon_soda": {
+    "dish": "lemon_soda",
+    "calories": 105.0,
+    "protein": 0.3,
+    "carbs": 27.0,
+    "fats": 0.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "jaljeera": {
+    "dish": "jaljeera",
+    "calories": 60.0,
+    "protein": 0.6,
+    "carbs": 14.0,
+    "fats": 0.4,
+    "portion_g": 200,
+    "source": "lookup_table"
+  },
+  "cold_coffee": {
+    "dish": "cold_coffee",
+    "calories": 390.0,
+    "protein": 12.0,
+    "carbs": 54.0,
+    "fats": 15.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "fruit_smoothie": {
+    "dish": "fruit_smoothie",
+    "calories": 330.0,
+    "protein": 6.0,
+    "carbs": 72.0,
+    "fats": 3.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "banana_smoothie": {
+    "dish": "banana_smoothie",
+    "calories": 360.0,
+    "protein": 9.0,
+    "carbs": 75.0,
+    "fats": 6.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "mango_smoothie": {
+    "dish": "mango_smoothie",
+    "calories": 375.0,
+    "protein": 6.0,
+    "carbs": 81.0,
+    "fats": 4.5,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "strawberry_smoothie": {
+    "dish": "strawberry_smoothie",
+    "calories": 315.0,
+    "protein": 7.5,
+    "carbs": 66.0,
+    "fats": 4.5,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "chocolate_smoothie": {
+    "dish": "chocolate_smoothie",
+    "calories": 540.0,
+    "protein": 15.0,
+    "carbs": 84.0,
+    "fats": 18.0,
+    "portion_g": 300,
+    "source": "lookup_table"
+  },
+  "protein_smoothie": {
+    "dish": "protein_smoothie",
+    "calories": 700.0,
+    "protein": 70.0,
+    "carbs": 70.0,
+    "fats": 14.0,
+    "portion_g": 350,
+    "source": "lookup_table"
+  },
+  "waffle": {
+    "dish": "waffle",
+    "calories": 200.0,
+    "protein": 4.0,
+    "carbs": 35.0,
+    "fats": 8.0,
+    "portion_g": 100.0,
+    "source": "llm_hf"
+  },
+  "apple": {
+    "dish": "apple",
+    "calories": 95.0,
+    "protein": 0.5,
+    "carbs": 25.0,
+    "fats": 0.3,
+    "portion_g": 182.0,
+    "source": "llm_hf"
+  },
+  "crossiant": {
+    "dish": "croissant",
+    "calories": 231.0,
+    "protein": 5.4,
+    "carbs": 29.2,
+    "fats": 12.7,
+    "portion_g": 55.0,
+    "source": "llm_hf"
+  },
+  "veg_maggi": {
+    "dish": "veg_maggi",
+    "calories": 315.0,
+    "protein": 7.2,
+    "carbs": 42.0,
+    "fats": 13.5,
+    "portion_g": 150,
+    "serving_desc": "1 plate",
+    "source": "lookup_table"
+  },
+  "egg_maggi": {
+    "dish": "egg_maggi",
+    "calories": 392.0,
+    "protein": 16.0,
+    "carbs": 43.2,
+    "fats": 17.6,
+    "portion_g": 160,
+    "serving_desc": "1 plate with 1 egg",
+    "source": "lookup_table"
+  },
+  "chicken_maggi": {
+    "dish": "chicken_maggi",
+    "calories": 408.0,
+    "protein": 19.2,
+    "carbs": 43.2,
+    "fats": 17.6,
+    "portion_g": 160,
+    "serving_desc": "1 plate with chicken",
+    "source": "lookup_table"
+  },
+  "cheese_maggi": {
+    "dish": "cheese_maggi",
+    "calories": 420.0,
+    "protein": 15.0,
+    "carbs": 40.5,
+    "fats": 21.0,
+    "portion_g": 150,
+    "serving_desc": "1 plate with cheese",
+    "source": "lookup_table"
+  },
+  "vada_sambhar": {
+    "dish": "vada_sambhar",
+    "calories": 414.0,
+    "protein": 13.8,
+    "carbs": 50.6,
+    "fats": 18.4,
+    "portion_g": 230,
+    "serving_desc": "1 vada with 1 bowl sambar",
+    "source": "lookup_table"
+  },
+  "dal_makhani": {
+    "dish": "dal_makhani",
+    "calories": 300.0,
+    "protein": 14.0,
+    "carbs": 40.0,
+    "fats": 11.0,
+    "portion_g": 200,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "rajma_chawal": {
+    "dish": "rajma_chawal",
+    "calories": 472.5,
+    "protein": 22.8,
+    "carbs": 84.0,
+    "fats": 7.0,
+    "portion_g": 350,
+    "serving_desc": "1 plate (rice + rajma)",
+    "source": "lookup_table"
+  },
+  "chole_rice": {
+    "dish": "chole_rice",
+    "calories": 518.0,
+    "protein": 21.0,
+    "carbs": 91.0,
+    "fats": 8.8,
+    "portion_g": 350,
+    "serving_desc": "1 plate (rice + chole)",
+    "source": "lookup_table"
+  },
+  "gobi": {
+    "dish": "gobi",
+    "calories": 112.5,
+    "protein": 3.8,
+    "carbs": 16.5,
+    "fats": 3.8,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "phool_gobi": {
+    "dish": "phool_gobi",
+    "calories": 112.5,
+    "protein": 3.8,
+    "carbs": 16.5,
+    "fats": 3.8,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "fula_gobi": {
+    "dish": "fula_gobi",
+    "calories": 112.5,
+    "protein": 3.8,
+    "carbs": 16.5,
+    "fats": 3.8,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "gobi_masala": {
+    "dish": "gobi_masala",
+    "calories": 135.0,
+    "protein": 4.2,
+    "carbs": 19.5,
+    "fats": 5.2,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "gobi_fry": {
+    "dish": "gobi_fry",
+    "calories": 165.0,
+    "protein": 4.5,
+    "carbs": 19.5,
+    "fats": 8.2,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "aloo_sabzi": {
+    "dish": "aloo_sabzi",
+    "calories": 150.0,
+    "protein": 3.0,
+    "carbs": 24.0,
+    "fats": 5.2,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "aloo_matar": {
+    "dish": "aloo_matar",
+    "calories": 157.5,
+    "protein": 5.2,
+    "carbs": 25.5,
+    "fats": 4.5,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "bhindi_masala": {
+    "dish": "bhindi_masala",
+    "calories": 75.0,
+    "protein": 2.0,
+    "carbs": 10.0,
+    "fats": 3.5,
+    "portion_g": 100,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "mix_veg": {
+    "dish": "mix_veg",
+    "calories": 120.0,
+    "protein": 3.3,
+    "carbs": 18.0,
+    "fats": 4.2,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "mixed_veg": {
+    "dish": "mixed_veg",
+    "calories": 120.0,
+    "protein": 3.3,
+    "carbs": 18.0,
+    "fats": 4.2,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "matar_paneer": {
+    "dish": "matar_paneer",
+    "calories": 350.0,
+    "protein": 19.0,
+    "carbs": 28.0,
+    "fats": 18.0,
+    "portion_g": 200,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "shahi_paneer": {
+    "dish": "shahi_paneer",
+    "calories": 440.0,
+    "protein": 20.0,
+    "carbs": 24.0,
+    "fats": 30.0,
+    "portion_g": 200,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "kadai_paneer": {
+    "dish": "kadai_paneer",
+    "calories": 400.0,
+    "protein": 21.0,
+    "carbs": 22.0,
+    "fats": 26.0,
+    "portion_g": 200,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "egg_bhurji": {
+    "dish": "egg_bhurji",
+    "calories": 216.0,
+    "protein": 13.2,
+    "carbs": 3.6,
+    "fats": 15.6,
+    "portion_g": 120,
+    "serving_desc": "1 plate (2 eggs)",
+    "source": "lookup_table"
+  },
+  "chicken_do_pyaza": {
+    "dish": "chicken_do_pyaza",
+    "calories": 350.0,
+    "protein": 38.0,
+    "carbs": 14.0,
+    "fats": 18.0,
+    "portion_g": 200,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "mutton_curry": {
+    "dish": "mutton_curry",
+    "calories": 380.0,
+    "protein": 40.0,
+    "carbs": 8.0,
+    "fats": 22.0,
+    "portion_g": 200,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "prawn_curry": {
+    "dish": "prawn_curry",
+    "calories": 195.0,
+    "protein": 24.0,
+    "carbs": 7.5,
+    "fats": 9.0,
+    "portion_g": 150,
+    "serving_desc": "1 bowl",
+    "source": "lookup_table"
+  },
+  "ramen": {
+    "dish": "ramen",
+    "calories": 400.0,
+    "protein": 10.0,
+    "carbs": 60.0,
+    "fats": 15.0,
+    "portion_g": 300.0,
+    "source": "llm_hf"
+  },
+  "bhindi": {
+    "dish": "bhindi",
+    "calories": 35.0,
+    "protein": 1.5,
+    "carbs": 7.5,
+    "fats": 0.2,
+    "portion_g": 100.0,
+    "source": "llm_hf"
+  },
+  "pongan_aloo": {
+    "dish": "pongan_aloo",
+    "calories": 150.0,
+    "protein": 4.0,
+    "carbs": 28.0,
+    "fats": 5.0,
+    "portion_g": 200.0,
+    "source": "llm_hf"
+  },
+  "bonda": {
+    "dish": "bonda",
+    "calories": 250.0,
+    "protein": 4.0,
+    "carbs": 35.0,
+    "fats": 12.0,
+    "portion_g": 100.0,
+    "source": "llm_hf"
+  },
+  "burger": {
+    "dish": "burger",
+    "calories": 350.0,
+    "protein": 20.0,
+    "carbs": 40.0,
+    "fats": 18.0,
+    "portion_g": 200.0,
+    "source": "llm_hf"
+  }
+}

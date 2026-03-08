@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitAI — Setup Your Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0d;
+      --surface:  #161616;
+      --surface2: #1f1f1f;
+      --border:   #2a2a2a;
+      --accent:   #e8ff47;
+      --accent2:  #ff6b35;
+      --text:     #f0f0f0;
+      --muted:    #666;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius:   16px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    .wrapper {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 48px 0 36px;
+      animation: fadeDown 0.5s ease both;
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.8rem;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .logo-dot {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Steps ── */
+    .step {
+      display: none;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .step.active { display: block; }
+
+    .step-title {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .step-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* ── Form fields ── */
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus { border-color: var(--accent); }
+    .field input::placeholder { color: var(--muted); }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* ── Option cards ── */
+    .options {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .options.grid-2 { grid-template-columns: 1fr 1fr; }
+    .options.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .option-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+      user-select: none;
+    }
+
+    .option-card:hover { border-color: #3a3a3a; }
+
+    .option-card.selected {
+      border-color: var(--accent);
+      background: #1a1a0f;
+    }
+
+    .option-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .option-label {
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .option-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── Nav buttons ── */
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-back {
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-back:hover { color: var(--text); border-color: #444; }
+
+    .btn-next {
+      flex: 1;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,255,71,0.25);
+    }
+
+    .btn-next:active { transform: translateY(0); }
+
+    /* ── Results screen ── */
+    #resultScreen {
+      display: none;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .result-greeting {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .result-greeting span { color: var(--accent); }
+
+    .result-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* Plan summary card */
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .plan-card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .plan-card-title {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .plan-badge {
+      font-size: 0.72rem;
+      background: rgba(232,255,71,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(232,255,71,0.2);
+      border-radius: 20px;
+      padding: 3px 10px;
+      text-transform: capitalize;
+    }
+
+    /* Calorie hero */
+    .calorie-hero {
+      padding: 28px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calorie-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .calorie-number {
+      font-family: var(--font-head);
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .calorie-number span { color: var(--accent); }
+
+    .calorie-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Macro grid */
+    .macro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .macro-cell {
+      padding: 18px 16px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .macro-cell:last-child { border-right: none; }
+
+    .macro-val {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .macro-name {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 3px;
+    }
+
+    /* Goal breakdown */
+    .breakdown-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .breakdown-title {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .breakdown-row:last-child { border-bottom: none; }
+
+    .breakdown-key { color: var(--muted); }
+    .breakdown-val {
+      font-family: var(--font-head);
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    /* CTA */
+    .btn-start {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-top: 4px;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,255,71,0.25);
+    }
+
+    .btn-redo {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-redo:hover { color: var(--text); border-color: #444; }
+
+    /* ── Error ── */
+    .field-error {
+      font-size: 0.78rem;
+      color: #ff6b6b;
+      margin-top: 5px;
+      display: none;
+    }
+
+    /* ── Settings panel ── */
+    .settings-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .settings-overlay.open { opacity: 1; pointer-events: all; }
+
+    .settings-panel {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(380px, 100vw);
+      background: #111;
+      border-left: 1px solid var(--border);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      padding: 28px 24px 60px;
+    }
+
+    .settings-panel.open { transform: translateX(0); }
+
+    .settings-close {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .settings-title {
+      font-family: var(--font-head);
+      font-size: 1.2rem; font-weight: 700;
+    }
+
+    .btn-close-panel {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--surface2);
+      color: var(--muted); cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s;
+    }
+    .btn-close-panel:hover { color: var(--text); }
+
+    .settings-section-title {
+      font-size: 0.72rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin: 20px 0 10px;
+    }
+
+    .settings-field { margin-bottom: 14px; }
+    .settings-field label {
+      display: block; font-size: 0.78rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .settings-field input, .settings-field select {
+      width: 100%; background: var(--surface2);
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      padding: 10px 12px; color: var(--text);
+      font-family: var(--font-body); font-size: 0.9rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .settings-field input:focus, .settings-field select:focus { border-color: var(--accent); }
+    .settings-field select option { background: #1f1f1f; }
+
+    .btn-recalculate {
+      width: 100%; padding: 14px; border-radius: var(--radius-sm);
+      border: none; background: var(--accent); color: #0d0d0d;
+      font-family: var(--font-head); font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; margin-top: 8px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-recalculate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(232,255,71,0.25);
+    }
+
+    .settings-stat-row {
+      display: flex; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .settings-stat-row:last-child { border-bottom: none; }
+    .settings-stat-key { color: var(--muted); }
+    .settings-stat-val { font-family: var(--font-head); font-weight: 600; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.4); opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span class="logo-dot"></span>FitAI
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">1 of 5</div>
+    </div>
+  </header>
+
+  <!-- ── Step 1: Basic Info ── -->
+  <div class="step active" id="step1">
+    <div class="step-title">Let's get to know you</div>
+    <div class="step-sub">Basic info to personalise your plan</div>
+
+    <div class="field">
+      <label>Your Name</label>
+      <input type="text" id="name" placeholder="e.g. Rahul" />
+      <div class="field-error" id="nameErr">Please enter your name</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Age</label>
+        <input type="number" id="age" placeholder="21" min="10" max="80" />
+        <div class="field-error" id="ageErr">Enter a valid age</div>
+      </div>
+      <div class="field">
+        <label>Gender</label>
+        <div class="options grid-2" style="margin-bottom:0">
+          <div class="option-card" onclick="selectOption('gender','male',this)">
+            <div class="option-icon">♂</div>
+            <div class="option-label">Male</div>
+          </div>
+          <div class="option-card" onclick="selectOption('gender','female',this)">
+            <div class="option-icon">♀</div>
+            <div class="option-label">Female</div>
+          </div>
+        </div>
+        <div class="field-error" id="genderErr">Select gender</div>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Height (cm)</label>
+        <input type="number" id="height" placeholder="175" min="100" max="250" />
+        <div class="field-error" id="heightErr">Enter valid height</div>
+      </div>
+      <div class="field">
+        <label>Weight (kg)</label>
+        <input type="number" id="weight" placeholder="70" min="30" max="250" />
+        <div class="field-error" id="weightErr">Enter valid weight</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-next" onclick="nextStep(1)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 2: Goal ── -->
+  <div class="step" id="step2">
+    <div class="step-title">What's your goal?</div>
+    <div class="step-sub">We'll set your calorie target based on this</div>
+
+    <div class="options">
+      <div class="option-card" onclick="selectOption('goal','lose',this)">
+        <div class="option-icon">🔥</div>
+        <div class="option-label">Lose Weight</div>
+        <div class="option-sub">Calorie deficit · High protein</div>
+      </div>
+      <div class="option-card" onclick="selectOption('goal','gain',this)">
+        <div class="option-icon">💪</div>
+        <div class="option-label">Gain Muscle</div>
+        <div class="option-sub">Calorie surplus · Max protein</div>
+      </div>
+      <div class="option-card" onclick="selectOption('goal','maintain',this)">
+        <div class="option-icon">⚖️</div>
+        <div class="option-label">Maintain</div>
+        <div class="option-sub">Eat at TDEE · Balanced macros</div>
+      </div>
+    </div>
+    <div class="field-error" id="goalErr" style="display:none; margin-top:-18px; margin-bottom:18px">Please select a goal</div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(2)">←</button>
+      <button class="btn-next" onclick="nextStep(2)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 3: Activity Level ── -->
+  <div class="step" id="step3">
+    <div class="step-title">How active are you?</div>
+    <div class="step-sub">Be honest — this affects your calorie calculation significantly</div>
+
+    <div class="options">
+      <div class="option-card" onclick="selectOption('activity','sedentary',this)">
+        <div class="option-icon">🪑</div>
+        <div class="option-label">Sedentary</div>
+        <div class="option-sub">Desk job · Little exercise</div>
+      </div>
+      <div class="option-card" onclick="selectOption('activity','moderate',this)">
+        <div class="option-icon">🚶</div>
+        <div class="option-label">Moderate</div>
+        <div class="option-sub">Light exercise 2–3x / week</div>
+      </div>
+      <div class="option-card" onclick="selectOption('activity','active',this)">
+        <div class="option-icon">🏃</div>
+        <div class="option-label">Active</div>
+        <div class="option-sub">Hard exercise 4–5x / week</div>
+      </div>
+      <div class="option-card" onclick="selectOption('activity','very_active',this)">
+        <div class="option-icon">🏋️</div>
+        <div class="option-label">Very Active</div>
+        <div class="option-sub">Athlete · Training daily</div>
+      </div>
+    </div>
+    <div class="field-error" id="activityErr" style="display:none; margin-top:-18px; margin-bottom:18px">Please select activity level</div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(3)">←</button>
+      <button class="btn-next" onclick="nextStep(3)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 4: Dietary Preference ── -->
+  <div class="step" id="step4">
+    <div class="step-title">Dietary preference</div>
+    <div class="step-sub">Helps us tailor protein recommendations</div>
+
+    <div class="options grid-2">
+      <div class="option-card" onclick="selectOption('diet','vegetarian',this)">
+        <div class="option-icon">🥦</div>
+        <div class="option-label">Vegetarian</div>
+      </div>
+      <div class="option-card" onclick="selectOption('diet','non_vegetarian',this)">
+        <div class="option-icon">🍗</div>
+        <div class="option-label">Non-Veg</div>
+      </div>
+      <div class="option-card" onclick="selectOption('diet','vegan',this)">
+        <div class="option-icon">🌱</div>
+        <div class="option-label">Vegan</div>
+      </div>
+      <div class="option-card" onclick="selectOption('diet','jain',this)">
+        <div class="option-icon">🙏</div>
+        <div class="option-label">Jain</div>
+      </div>
+    </div>
+    <div class="field-error" id="dietErr" style="display:none; margin-top:-18px; margin-bottom:18px">Please select a preference</div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(4)">←</button>
+      <button class="btn-next" onclick="nextStep(4)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── Step 5: Target Duration ── -->
+  <div class="step" id="step5">
+    <div class="step-title">Set your target</div>
+    <div class="step-sub" id="step5Sub">How long do you want to track your nutrition?</div>
+
+    <div class="field" id="targetWeightField">
+      <label id="targetWeightLabel">Target Weight (kg)</label>
+      <input type="number" id="targetWeight" placeholder="65" min="30" max="250" />
+      <div class="field-error" id="targetWeightErr">Please enter your target weight</div>
+    </div>
+
+    <div class="field">
+      <label>Duration (weeks)</label>
+      <input type="number" id="duration" placeholder="8" min="1" max="52" />
+      <div class="field-error" id="durationErr">Enter 1–52 weeks</div>
+    </div>
+
+    <!-- Goal feasibility warning (soft warn) -->
+    <div id="goalWarn" style="display:none; background:#1a1200; border:1px solid #3a2800;
+         border-radius:12px; padding:14px 16px; margin-bottom:16px; font-size:0.83rem;">
+      <div style="color:#ffb347; font-family:'Syne',sans-serif; font-weight:700; margin-bottom:6px;">
+        ⚠️ Aggressive goal detected
+      </div>
+      <div id="goalWarnText" style="color:#aaa; line-height:1.5;"></div>
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button onclick="applyRecommendedDuration()"
+          style="padding:7px 14px; border-radius:8px; border:none; background:#ffb347;
+                 color:#0d0d0d; font-family:'Syne',sans-serif; font-weight:700;
+                 font-size:0.8rem; cursor:pointer;">
+          Use recommended duration
+        </button>
+        <button onclick="dismissWarn()"
+          style="padding:7px 14px; border-radius:8px; border:1px solid #3a2800;
+                 background:transparent; color:#aaa; font-size:0.8rem; cursor:pointer;">
+          Proceed anyway
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(5)">←</button>
+      <button class="btn-next" onclick="generatePlan()">Generate My Plan ⚡</button>
+    </div>
+  </div>
+
+  <!-- ── Result Screen ── -->
+  <div id="resultScreen">
+    <div class="result-greeting">Your plan is <span>ready</span></div>
+    <div class="result-sub" id="resultSub">Here's what you need daily to hit your goal</div>
+
+    <!-- Daily targets card -->
+    <div class="plan-card">
+      <div class="plan-card-header">
+        <div class="plan-card-title">Daily Targets</div>
+        <div class="plan-badge" id="goalBadge">—</div>
+      </div>
+      <div class="calorie-hero">
+        <div class="calorie-number"><span id="rCalories">—</span></div>
+        <div class="calorie-label">calories per day</div>
+      </div>
+      <div class="macro-grid">
+        <div class="macro-cell">
+          <div class="macro-val" id="rProtein">—</div>
+          <div class="macro-name">Protein (g)</div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-val" id="rCarbs">—</div>
+          <div class="macro-name">Carbs (g)</div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-val" id="rFats">—</div>
+          <div class="macro-name">Fats (g)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breakdown -->
+    <div class="breakdown-card">
+      <div class="breakdown-title">How we calculated this</div>
+      <div class="breakdown-row">
+        <span class="breakdown-key">BMR (base metabolic rate)</span>
+        <span class="breakdown-val" id="rBMR">—</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-key">TDEE (with activity)</span>
+        <span class="breakdown-val" id="rTDEE">—</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-key">Goal adjustment</span>
+        <span class="breakdown-val" id="rAdj">—</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-key">Activity level</span>
+        <span class="breakdown-val" id="rActivity">—</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-key">Duration</span>
+        <span class="breakdown-val" id="rDuration">—</span>
+      </div>
+      <div class="breakdown-row" id="bmiRow">
+        <span class="breakdown-key">Your BMI</span>
+        <span class="breakdown-val" id="rBMI">—</span>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="goToApp()">Start Tracking →</button>
+    <button class="btn-redo" onclick="redoPlan()">Recalculate plan</button>
+  </div>
+
+</div>
+
+<script>
+  const form = {
+    name:'', age:null, gender:null, height:null, weight:null,
+    goal:null, activity:null, diet:null, duration:null, targetWeight:null
+  };
+  const TOTAL_STEPS = 5;
+  let recommendedDuration = null;
+  let warnDismissed = false;
+
+  window.addEventListener('load', () => {
+    const existing = localStorage.getItem('fitai_plan');
+    if (existing) {
+      const plan = JSON.parse(existing);
+      if (confirm(`Welcome back, ${plan.name}! Your plan already exists. Go to the app?`))
+        window.location.href = 'log.html';
+    }
+  });
+
+  function selectOption(field, value, el) {
+    form[field] = value;
+    el.closest('.options').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    if (field === 'goal') updateStep5ForGoal(value);
+  }
+
+  function updateStep5ForGoal(goal) {
+    const field = document.getElementById('targetWeightField');
+    const sub   = document.getElementById('step5Sub');
+    if (goal === 'maintain') {
+      field.style.display = 'none';
+      sub.textContent = 'How long do you want to track your nutrition?';
+    } else {
+      field.style.display = 'block';
+      sub.textContent = 'Enter your goal weight and how long you want to take.';
+    }
+  }
+
+  function setProgress(step) {
+    document.getElementById('progressFill').style.width = (step/TOTAL_STEPS*100)+'%';
+    document.getElementById('progressLabel').textContent = `${step} of ${TOTAL_STEPS}`;
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(`step${n}`).classList.add('active');
+    setProgress(n);
+    if (n === 5 && form.goal) updateStep5ForGoal(form.goal);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function prevStep(c) { showStep(c-1); }
+  function nextStep(c) { if (!validateStep(c)) return; showStep(c+1); }
+
+  function showErr(id, show) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = show ? 'block' : 'none';
+  }
+
+  function validateStep(step) {
+    let valid = true;
+    if (step === 1) {
+      const name=document.getElementById('name').value.trim();
+      const age=parseInt(document.getElementById('age').value);
+      const height=parseFloat(document.getElementById('height').value);
+      const weight=parseFloat(document.getElementById('weight').value);
+      showErr('nameErr',!name); showErr('ageErr',!age||age<10||age>80);
+      showErr('genderErr',!form.gender); showErr('heightErr',!height||height<100||height>250);
+      showErr('weightErr',!weight||weight<30||weight>250);
+      if (!name||!age||age<10||age>80||!form.gender||!height||height<100||!weight||weight<30) valid=false;
+      else { form.name=name; form.age=age; form.height=height; form.weight=weight; }
+    }
+    if (step===2) { showErr('goalErr',!form.goal); if(!form.goal) valid=false; }
+    if (step===3) { showErr('activityErr',!form.activity); if(!form.activity) valid=false; }
+    if (step===4) { showErr('dietErr',!form.diet); if(!form.diet) valid=false; }
+    if (step===5) {
+      const dur=parseInt(document.getElementById('duration').value);
+      showErr('durationErr',!dur||dur<1||dur>52);
+      if (!dur||dur<1||dur>52) return false;
+      form.duration=dur;
+      if (form.goal !== 'maintain') {
+        const tw=parseFloat(document.getElementById('targetWeight').value);
+        showErr('targetWeightErr',!tw||tw<30||tw>250);
+        if (!tw||tw<30||tw>250) return false;
+        form.targetWeight=tw;
+        if (!warnDismissed) {
+          const f=checkFeasibility(form.weight,tw,dur,form.goal);
+          if (!f.ok) { showGoalWarning(f); return false; }
+        }
+      } else { form.targetWeight=null; }
+    }
+    return valid;
+  }
+
+  function checkFeasibility(cw, tw, weeks, goal) {
+    const diff=Math.abs(cw-tw), weekly=diff/weeks;
+    if (weekly<=1.0) return {ok:true};
+    recommendedDuration=Math.ceil(diff/0.75);
+    const dir=goal==='lose'?'lose':'gain';
+    return {
+      ok:false, diff, weeklyChange:weekly.toFixed(2), recommendedDuration, direction:dir,
+      message:`To ${dir} ${diff}kg in ${weeks} weeks you need to ${dir} <strong>${weekly.toFixed(2)}kg/week</strong>, exceeding the safe limit of 1kg/week.<br><br>A healthy pace of 0.75kg/week means this goal takes about <strong>${Math.ceil(diff/0.75)} weeks</strong>.`
+    };
+  }
+
+  function showGoalWarning(f) {
+    document.getElementById('goalWarnText').innerHTML = f.message;
+    document.getElementById('goalWarn').style.display = 'block';
+    document.getElementById('goalWarn').scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function applyRecommendedDuration() {
+    if (!recommendedDuration) return;
+    document.getElementById('duration').value = recommendedDuration;
+    form.duration = recommendedDuration;
+    document.getElementById('goalWarn').style.display = 'none';
+    warnDismissed = true;
+    generatePlan();
+  }
+
+  function dismissWarn() {
+    document.getElementById('goalWarn').style.display = 'none';
+    warnDismissed = true;
+    generatePlan();
+  }
+
+  function calcPlan(weight,height,age,gender,goal,activity) {
+    let bmr = gender==='male'
+      ? 10*weight+6.25*height-5*age+5
+      : 10*weight+6.25*height-5*age-161;
+    bmr=Math.round(bmr);
+    const m={sedentary:1.2,moderate:1.375,active:1.55,very_active:1.725};
+    const tdee=Math.round(bmr*m[activity]);
+    let calories,adjLabel;
+    if (goal==='lose')     {calories=tdee-500;adjLabel='−500 kcal deficit';}
+    else if (goal==='gain'){calories=tdee+300;adjLabel='+300 kcal surplus';}
+    else                   {calories=tdee;    adjLabel='No adjustment';}
+    calories=Math.max(calories,1200);
+    const proteinPerKg=goal==='gain'?2.0:goal==='lose'?1.8:1.6;
+    const protein=Math.round(weight*proteinPerKg);
+    const fats=Math.round((calories*0.25)/9);
+    const carbs=Math.round((calories-protein*4-fats*9)/4);
+    const bmi=(weight/((height/100)**2)).toFixed(1);
+    const bmiLabel=bmi<18.5?'Underweight':bmi<25?'Normal':bmi<30?'Overweight':'Obese';
+    return {bmr,tdee,calories,protein,carbs,fats,bmi,bmiLabel,adjLabel};
+  }
+
+  function generatePlan() {
+    if (!validateStep(5)) return;
+    const {name,age,gender,height,weight,goal,activity,diet,duration,targetWeight}=form;
+    const c=calcPlan(weight,height,age,gender,goal,activity);
+    const goalLabels={lose:'Weight Loss',gain:'Muscle Gain',maintain:'Maintenance'};
+    const actLabels={sedentary:'Sedentary (×1.2)',moderate:'Moderate (×1.375)',active:'Active (×1.55)',very_active:'Very Active (×1.725)'};
+
+    // Projection
+    let projection='';
+    if (goal!=='maintain'&&targetWeight) {
+      const diff=Math.abs(weight-targetWeight);
+      const rate=goal==='lose'?0.5:0.3;
+      projection=`At this pace (~${rate}kg/week) you will reach ${targetWeight}kg in ~${Math.ceil(diff/rate)} weeks`;
+    }
+
+    const plan={name,age,gender,height,weight,goal,activity,diet,duration,targetWeight,
+      calories:c.calories,protein:c.protein,carbs:c.carbs,fats:c.fats,
+      bmr:c.bmr,tdee:c.tdee,bmi:c.bmi,createdAt:new Date().toISOString()};
+    localStorage.setItem('fitai_plan',JSON.stringify(plan));
+
+    document.querySelectorAll('.step').forEach(s=>s.style.display='none');
+    document.getElementById('progressFill').style.width='100%';
+    document.getElementById('progressLabel').textContent='Done!';
+    document.getElementById('resultSub').textContent=`Here's what you need daily, ${name}`;
+    document.getElementById('goalBadge').textContent=goalLabels[goal];
+    document.getElementById('rCalories').textContent=c.calories.toLocaleString();
+    document.getElementById('rProtein').textContent=c.protein;
+    document.getElementById('rCarbs').textContent=c.carbs;
+    document.getElementById('rFats').textContent=c.fats;
+    document.getElementById('rBMR').textContent=`${c.bmr} kcal`;
+    document.getElementById('rTDEE').textContent=`${c.tdee} kcal`;
+    document.getElementById('rAdj').textContent=c.adjLabel;
+    document.getElementById('rActivity').textContent=actLabels[activity];
+    document.getElementById('rDuration').textContent=`${duration} weeks`;
+    document.getElementById('rBMI').textContent=`${c.bmi} — ${c.bmiLabel}`;
+    if (projection) {
+      document.getElementById('bmiRow').insertAdjacentHTML('afterend',
+        `<div class="breakdown-row"><span class="breakdown-key">Projection</span>
+         <span class="breakdown-val" style="color:var(--accent);font-size:0.8rem">${projection}</span></div>`);
+    }
+    document.getElementById('resultScreen').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function goToApp()  { window.location.href='log.html'; }
+  function redoPlan() {
+    document.getElementById('resultScreen').style.display='none';
+    document.querySelectorAll('.step').forEach(s=>s.style.display='');
+    warnDismissed=false; showStep(1);
+  }
+
+  // ── Settings panel ─────────────────────────────────────────────────
+  function openSettings() {
+    const plan=JSON.parse(localStorage.getItem('fitai_plan')||'null');
+    if (!plan) return;
+    document.getElementById('settingsStats').innerHTML=`
+      <div class="settings-stat-row"><span class="settings-stat-key">Name</span><span class="settings-stat-val">${plan.name}</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">Age</span><span class="settings-stat-val">${plan.age}</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">Height</span><span class="settings-stat-val">${plan.height} cm</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">BMI</span><span class="settings-stat-val">${plan.bmi}</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">Daily Calories</span><span class="settings-stat-val" style="color:var(--accent)">${plan.calories} kcal</span></div>`;
+    document.getElementById('s_weight').value=plan.weight;
+    document.getElementById('s_goal').value=plan.goal;
+    document.getElementById('s_activity').value=plan.activity;
+    document.getElementById('s_duration').value=plan.duration;
+    document.getElementById('s_targetWeight').value=plan.targetWeight||'';
+    document.getElementById('s_targetWeightField').style.display=plan.goal==='maintain'?'none':'block';
+    document.getElementById('s_goal').onchange=function(){
+      document.getElementById('s_targetWeightField').style.display=this.value==='maintain'?'none':'block';
+    };
+    document.getElementById('settingsOverlay').classList.add('open');
+    document.getElementById('settingsPanel').classList.add('open');
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsOverlay').classList.remove('open');
+    document.getElementById('settingsPanel').classList.remove('open');
+  }
+
+  function recalculateFromSettings() {
+    const existing=JSON.parse(localStorage.getItem('fitai_plan')||'null');
+    if (!existing) return;
+    const weight=parseFloat(document.getElementById('s_weight').value);
+    const goal=document.getElementById('s_goal').value;
+    const activity=document.getElementById('s_activity').value;
+    const duration=parseInt(document.getElementById('s_duration').value);
+    const targetWeight=goal!=='maintain'?parseFloat(document.getElementById('s_targetWeight').value)||null:null;
+    if (!weight||!duration) { alert('Please fill all fields'); return; }
+    const c=calcPlan(weight,existing.height,existing.age,existing.gender,goal,activity);
+    const updated={...existing,weight,goal,activity,duration,targetWeight,
+      calories:c.calories,protein:c.protein,carbs:c.carbs,fats:c.fats,
+      bmr:c.bmr,tdee:c.tdee,bmi:c.bmi,updatedAt:new Date().toISOString()};
+    localStorage.setItem('fitai_plan',JSON.stringify(updated));
+    closeSettings();
+    window.location.reload();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitAI — Know What You Eat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Variables ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d0d0d;
+      --surface:    #161616;
+      --surface2:   #1f1f1f;
+      --border:     #2a2a2a;
+      --accent:     #e8ff47;
+      --accent2:    #ff6b35;
+      --text:       #f0f0f0;
+      --muted:      #666;
+      --success:    #4ade80;
+      --font-head:  'Syne', sans-serif;
+      --font-body:  'DM Sans', sans-serif;
+      --radius:     16px;
+      --radius-sm:  8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain overlay ─────────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────────── */
+    .wrapper {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────── */
+    header {
+      padding: 48px 0 40px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    .tagline {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Plan Banner ───────────────────────────────────────────────── */
+    .plan-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      display: none;
+      animation: fadeUp 0.5s 0.05s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .plan-banner-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .plan-banner-name {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .plan-banner-goal {
+      font-size: 0.72rem;
+      background: rgba(232,255,71,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(232,255,71,0.2);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    .plan-macro-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .plan-macro { text-align: center; }
+
+    .plan-macro-val {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .plan-macro-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    .plan-edit-link {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .plan-edit-link:hover { color: var(--text); }
+
+    /* ── Upload Zone ───────────────────────────────────────────────── */
+    .upload-zone {
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.6s 0.1s ease both;
+      background: var(--surface);
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
+      border-color: var(--accent);
+      background: #1a1a0f;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 16px;
+      background: var(--surface2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      border: 1px solid var(--border);
+    }
+
+    .upload-title {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .upload-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ── Divider ───────────────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      animation: fadeUp 0.6s 0.15s ease both;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .divider span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Camera Button ─────────────────────────────────────────────── */
+    .btn-camera {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .btn-camera:hover {
+      border-color: var(--accent);
+      background: #1a1a0f;
+    }
+
+    /* Hidden camera input */
+    #cameraInput { display: none; }
+
+    /* ── Preview ───────────────────────────────────────────────────── */
+    #previewSection {
+      display: none;
+      margin-top: 24px;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .preview-wrap {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    #previewImg {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .preview-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ── Analyse Button ────────────────────────────────────────────── */
+    .btn-analyse {
+      width: 100%;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-analyse:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,255,71,0.25);
+    }
+
+    .btn-analyse:active { transform: translateY(0); }
+
+    .btn-analyse:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ── Loader ────────────────────────────────────────────────────── */
+    #loader {
+      display: none;
+      margin-top: 28px;
+      text-align: center;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .loader-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Results ───────────────────────────────────────────────────── */
+    #resultsSection {
+      display: none;
+      margin-top: 28px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    /* Dish header */
+    .dish-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dish-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .dish-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .dish-name {
+      font-family: var(--font-head);
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      text-transform: capitalize;
+    }
+
+    .dish-name span {
+      color: var(--accent);
+    }
+
+    .confidence-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .confidence-bar-wrap {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .confidence-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .confidence-val {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Uncertain warning */
+    .uncertain-banner {
+      background: #1a1200;
+      border: 1px solid #3a2800;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #ffb347;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* Nutrition grid */
+    .nutrition-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .nutrition-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .nutrition-card:hover { border-color: #3a3a3a; }
+
+    .nutrition-card.calories {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nutrition-card .n-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .nutrition-card .n-value {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .nutrition-card .n-unit {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nutrition-card .n-icon {
+      font-size: 1.8rem;
+      opacity: 0.15;
+      position: absolute;
+      right: 16px;
+      bottom: 12px;
+    }
+
+    .cal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(232,255,71,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      border: 1px solid rgba(232,255,71,0.2);
+    }
+
+    /* Source badge */
+    .source-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 10px;
+      margin-bottom: 14px;
+    }
+
+    .source-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    /* Other predictions */
+    .other-preds {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .other-preds-title {
+      padding: 12px 18px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pred-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .pred-row:last-child { border-bottom: none; }
+
+    .pred-dish { text-transform: capitalize; }
+    .pred-conf { color: var(--muted); font-size: 0.8rem; }
+
+    /* Manual override */
+    .manual-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .manual-title {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .manual-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .manual-input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .manual-input:focus { border-color: var(--accent); }
+    .manual-input::placeholder { color: var(--muted); }
+
+    .btn-manual {
+      padding: 10px 18px;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-manual:hover {
+      border-color: var(--accent);
+      background: #1a1a0f;
+    }
+
+    /* Reset */
+    .btn-reset {
+      width: 100%;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-reset:hover { color: var(--text); border-color: #444; }
+
+    /* ── Error ─────────────────────────────────────────────────────── */
+    #errorSection {
+      display: none;
+      margin-top: 20px;
+      background: #1a0d0d;
+      border: 1px solid #3a1515;
+      border-radius: var(--radius);
+      padding: 18px;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .error-title {
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      color: #ff6b6b;
+      margin-bottom: 4px;
+    }
+
+    .error-msg {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ── Animations ────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.4); opacity: 0.6; }
+    }
+  
+    /* ── Settings panel ── */
+    .settings-overlay {
+      position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+      z-index:100;opacity:0;pointer-events:none;transition:opacity 0.3s;
+    }
+    .settings-overlay.open{opacity:1;pointer-events:all;}
+    .settings-panel {
+      position:fixed;top:0;right:0;bottom:0;width:min(380px,100vw);
+      background:#111;border-left:1px solid var(--border);z-index:101;
+      transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      overflow-y:auto;padding:28px 24px 60px;
+    }
+    .settings-panel.open{transform:translateX(0);}
+    .settings-close{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+    .settings-title{font-family:var(--font-head);font-size:1.2rem;font-weight:700;}
+    .btn-close-panel{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);
+      background:var(--surface2);color:var(--muted);cursor:pointer;font-size:1rem;
+      display:flex;align-items:center;justify-content:center;}
+    .settings-section-title{font-size:0.72rem;color:var(--muted);text-transform:uppercase;
+      letter-spacing:0.1em;margin:20px 0 10px;}
+    .settings-field{margin-bottom:14px;}
+    .settings-field label{display:block;font-size:0.78rem;color:var(--muted);
+      text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+    .settings-field input,.settings-field select{width:100%;background:var(--surface2);
+      border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;
+      color:var(--text);font-family:var(--font-body);font-size:0.9rem;outline:none;}
+    .settings-field select option{background:#1f1f1f;}
+    .btn-recalculate{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;
+      background:var(--accent);color:#0d0d0d;font-family:var(--font-head);font-size:0.95rem;
+      font-weight:700;cursor:pointer;margin-top:8px;}
+    .settings-stat-row{display:flex;justify-content:space-between;padding:8px 0;
+      border-bottom:1px solid var(--border);font-size:0.85rem;}
+    .settings-stat-row:last-child{border-bottom:none;}
+    .settings-stat-key{color:var(--muted);}
+    .settings-stat-val{font-family:var(--font-head);font-weight:600;}
+    </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <div class="logo">
+          <span class="logo-dot"></span>
+          FitAI
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <a href="log.html"   style="font-size:0.8rem;color:#666;text-decoration:none;">Log</a>
+          <a href="menu.html"  style="font-size:0.8rem;color:#666;text-decoration:none;">Menu</a>
+          <a href="plan.html"  style="font-size:0.8rem;color:#666;text-decoration:none;">Plan</a>
+          <span onclick="openSettings()" style="font-size:0.8rem;color:#666;cursor:pointer;">⚙</span>
+        </div>
+      </div>
+      <div class="tagline">Mess food · Nutrition · Instantly</div>
+    </header>
+
+    <!-- Plan Banner -->
+    <div class="plan-banner" id="planBanner">
+      <div class="plan-banner-top">
+        <div class="plan-banner-name" id="bannerName">Daily Targets</div>
+        <div class="plan-banner-goal" id="bannerGoal">—</div>
+      </div>
+      <div class="plan-macro-row">
+        <div class="plan-macro">
+          <div class="plan-macro-val" id="bannerCal">—</div>
+          <div class="plan-macro-label">kcal</div>
+        </div>
+        <div class="plan-macro">
+          <div class="plan-macro-val" id="bannerProtein">—</div>
+          <div class="plan-macro-label">protein g</div>
+        </div>
+        <div class="plan-macro">
+          <div class="plan-macro-val" id="bannerCarbs">—</div>
+          <div class="plan-macro-label">carbs g</div>
+        </div>
+        <div class="plan-macro">
+          <div class="plan-macro-val" id="bannerFats">—</div>
+          <div class="plan-macro-label">fats g</div>
+        </div>
+      </div>
+      <span class="plan-edit-link" onclick="window.location.href='onboarding.html'">Edit plan →</span>
+    </div>
+
+    <!-- Upload Zone -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" />
+      <div class="upload-icon">🍱</div>
+      <div class="upload-title">Drop your food photo here</div>
+      <div class="upload-sub">or click to browse — JPG, PNG, WEBP</div>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider"><span>or</span></div>
+
+    <!-- Camera Button -->
+    <button class="btn-camera" onclick="document.getElementById('cameraInput').click()">
+      <span>📷</span> Take a photo
+    </button>
+    <input type="file" id="cameraInput" accept="image/*" capture="environment" />
+
+    <!-- Preview -->
+    <div id="previewSection">
+      <div class="preview-wrap">
+        <img id="previewImg" src="" alt="Food preview" />
+        <div class="preview-badge" id="previewBadge">Ready to analyse</div>
+      </div>
+      <button class="btn-analyse" id="analyseBtn" onclick="analyse()">
+        <span>⚡</span> Analyse Food
+      </button>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader">
+      <div class="spinner"></div>
+      <div class="loader-text">Identifying your dish...</div>
+    </div>
+
+    <!-- Error -->
+    <div id="errorSection">
+      <div class="error-title">Something went wrong</div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+
+    <!-- Results -->
+    <div id="resultsSection">
+
+      <!-- Uncertain warning -->
+      <div class="uncertain-banner" id="uncertainBanner" style="display:none">
+        ⚠️ Low confidence — the model isn't sure. Check predictions below or enter the dish name manually.
+      </div>
+
+      <!-- Dish header -->
+      <div class="dish-header">
+        <div class="dish-label">Detected Dish</div>
+        <div class="dish-name" id="dishName">—</div>
+        <div class="confidence-row">
+          <div class="confidence-bar-wrap">
+            <div class="confidence-bar" id="confidenceBar" style="width:0%"></div>
+          </div>
+          <div class="confidence-val" id="confidenceVal">0%</div>
+        </div>
+      </div>
+
+      <!-- Source badge -->
+      <div class="source-badge">
+        <div class="source-dot"></div>
+        <span id="sourceText">Nutrition from cache</span>
+      </div>
+
+      <!-- Nutrition grid -->
+      <div class="nutrition-grid" id="nutritionGrid">
+        <!-- Calories -->
+        <div class="nutrition-card calories">
+          <div>
+            <div class="n-label">Calories</div>
+            <div class="n-value" id="nCalories">—</div>
+            <div class="n-unit">kcal · standard serving</div>
+          </div>
+          <div class="cal-icon">🔥</div>
+        </div>
+        <!-- Protein -->
+        <div class="nutrition-card">
+          <div class="n-label">Protein</div>
+          <div class="n-value" id="nProtein">—</div>
+          <div class="n-unit">grams</div>
+          <div class="n-icon">💪</div>
+        </div>
+        <!-- Carbs -->
+        <div class="nutrition-card">
+          <div class="n-label">Carbs</div>
+          <div class="n-value" id="nCarbs">—</div>
+          <div class="n-unit">grams</div>
+          <div class="n-icon">🌾</div>
+        </div>
+        <!-- Fats -->
+        <div class="nutrition-card">
+          <div class="n-label">Fats</div>
+          <div class="n-value" id="nFats">—</div>
+          <div class="n-unit">grams</div>
+          <div class="n-icon">🫒</div>
+        </div>
+        <!-- Portion -->
+        <div class="nutrition-card">
+          <div class="n-label">Portion</div>
+          <div class="n-value" id="nPortion">—</div>
+          <div class="n-unit">grams</div>
+          <div class="n-icon">⚖️</div>
+        </div>
+      </div>
+
+      <!-- Other predictions -->
+      <div class="other-preds" id="otherPreds"></div>
+
+      <!-- Manual override -->
+      <div class="manual-section">
+        <div class="manual-title">Wrong dish? Enter manually</div>
+        <div class="manual-row">
+          <input
+            type="text"
+            class="manual-input"
+            id="manualInput"
+            placeholder="e.g. Dal Tadka, Rajma..."
+          />
+          <button class="btn-manual" onclick="manualLookup()">Look up</button>
+        </div>
+      </div>
+
+      <!-- Reset -->
+      <button class="btn-reset" onclick="reset()">← Scan another dish</button>
+    </div>
+
+  </div>
+
+  <script>
+    const API = 'http://localhost:8000';
+    let selectedFile = null;
+
+    // ── Load plan from localStorage ───────────────────────────────────
+    window.addEventListener('load', () => {
+      const raw = localStorage.getItem('fitai_plan');
+      if (!raw) {
+        // No plan yet — redirect to onboarding
+        window.location.href = 'onboarding.html';
+        return;
+      }
+      const plan = JSON.parse(raw);
+      const goalLabels = { lose: 'Weight Loss', gain: 'Muscle Gain', maintain: 'Maintenance' };
+
+      document.getElementById('bannerName').textContent = `Hey ${plan.name} · Daily Targets`;
+      document.getElementById('bannerGoal').textContent = goalLabels[plan.goal] || plan.goal;
+      document.getElementById('bannerCal').textContent     = plan.calories.toLocaleString();
+      document.getElementById('bannerProtein').textContent = plan.protein;
+      document.getElementById('bannerCarbs').textContent   = plan.carbs;
+      document.getElementById('bannerFats').textContent    = plan.fats;
+      document.getElementById('planBanner').style.display  = 'block';
+    });
+    document.getElementById('fileInput').addEventListener('change', e => {
+      handleFile(e.target.files[0]);
+    });
+
+    document.getElementById('cameraInput').addEventListener('change', e => {
+      handleFile(e.target.files[0]);
+    });
+
+    // Drag and drop
+    const zone = document.getElementById('uploadZone');
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+      zone.classList.add('drag-over');
+    });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+    });
+
+    function handleFile(file) {
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showError('Please select an image file (JPG, PNG, WEBP).');
+        return;
+      }
+
+      selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('previewBadge').textContent = file.name;
+        document.getElementById('previewSection').style.display = 'block';
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('errorSection').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ── Analyse ───────────────────────────────────────────────────────
+    async function analyse() {
+      if (!selectedFile) return;
+
+      // Show loader
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('analyseBtn').disabled = true;
+      document.getElementById('resultsSection').style.display = 'none';
+      document.getElementById('errorSection').style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      try {
+        const res = await fetch(`${API}/predict`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || `Server error ${res.status}`);
+        }
+
+        const data = await res.json();
+        showResults(data);
+
+      } catch (err) {
+        showError(
+          err.message.includes('fetch')
+            ? 'Cannot connect to backend. Make sure uvicorn is running on port 8000.'
+            : err.message
+        );
+      } finally {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('analyseBtn').disabled = false;
+      }
+    }
+
+    // ── Show results ──────────────────────────────────────────────────
+    function showResults(data) {
+      const top  = data.top_prediction;
+      const nutr = data.nutrition;
+
+      // Uncertain banner
+      document.getElementById('uncertainBanner').style.display =
+        data.is_uncertain ? 'flex' : 'none';
+
+      // Dish name — format nicely
+      const formatted = top.dish.replace(/_/g, ' ');
+      document.getElementById('dishName').textContent = formatted;
+
+      // Confidence bar
+      setTimeout(() => {
+        document.getElementById('confidenceBar').style.width = top.confidence + '%';
+      }, 100);
+      document.getElementById('confidenceVal').textContent = top.confidence.toFixed(1) + '%';
+
+      // Nutrition
+      if (nutr) {
+        document.getElementById('nCalories').textContent = Math.round(nutr.calories);
+        document.getElementById('nProtein').textContent  = nutr.protein.toFixed(1);
+        document.getElementById('nCarbs').textContent    = nutr.carbs.toFixed(1);
+        document.getElementById('nFats').textContent     = nutr.fats.toFixed(1);
+        document.getElementById('nPortion').textContent  = Math.round(nutr.portion_g);
+        document.getElementById('sourceText').textContent =
+          `Nutrition via ${nutr.source}`;
+        document.getElementById('nutritionGrid').style.display = 'grid';
+      } else {
+        document.getElementById('nutritionGrid').style.display = 'none';
+        if (data.nutrition_error) {
+          document.getElementById('sourceText').textContent = '⚠ ' + data.nutrition_error;
+        }
+      }
+
+      // Other predictions
+      const others = data.all_predictions.slice(1);
+      const container = document.getElementById('otherPreds');
+      if (others.length > 0) {
+        container.innerHTML = `<div class="other-preds-title">Other possibilities</div>` +
+          others.map(p => `
+            <div class="pred-row">
+              <span class="pred-dish">${p.dish.replace(/_/g, ' ')}</span>
+              <span class="pred-conf">${p.confidence.toFixed(1)}%</span>
+            </div>
+          `).join('');
+        container.style.display = 'block';
+      } else {
+        container.style.display = 'none';
+      }
+
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    // ── Manual lookup ─────────────────────────────────────────────────
+    async function manualLookup() {
+      const input = document.getElementById('manualInput').value.trim();
+      if (!input) return;
+
+      try {
+        const res = await fetch(`${API}/nutrition`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dish_name: input })
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || 'Dish not found');
+        }
+
+        const nutr = await res.json();
+
+        // Update displayed dish name and nutrition
+        document.getElementById('dishName').textContent = nutr.dish.replace(/_/g, ' ');
+        document.getElementById('nCalories').textContent = Math.round(nutr.calories);
+        document.getElementById('nProtein').textContent  = nutr.protein.toFixed(1);
+        document.getElementById('nCarbs').textContent    = nutr.carbs.toFixed(1);
+        document.getElementById('nFats').textContent     = nutr.fats.toFixed(1);
+        document.getElementById('nPortion').textContent  = Math.round(nutr.portion_g);
+        document.getElementById('sourceText').textContent = `Nutrition via ${nutr.source} (manual)`;
+        document.getElementById('nutritionGrid').style.display = 'grid';
+        document.getElementById('uncertainBanner').style.display = 'none';
+        document.getElementById('manualInput').value = '';
+
+      } catch (err) {
+        alert('Could not find: ' + err.message);
+      }
+    }
+
+    // Allow Enter key on manual input
+    document.getElementById('manualInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') manualLookup();
+    });
+
+    // ── Error ─────────────────────────────────────────────────────────
+    function showError(msg) {
+      document.getElementById('errorMsg').textContent = msg;
+      document.getElementById('errorSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    // ── Reset ─────────────────────────────────────────────────────────
+    function reset() {
+      selectedFile = null;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('cameraInput').value = '';
+      document.getElementById('previewSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.getElementById('errorSection').style.display = 'none';
+      document.getElementById('confidenceBar').style.width = '0%';
+      document.getElementById('manualInput').value = '';
+    }
+  
+  function openSettings() {
+    const plan=JSON.parse(localStorage.getItem('fitai_plan')||'null');
+    if (!plan) return;
+    document.getElementById('settingsStats').innerHTML=`
+      <div class="settings-stat-row"><span class="settings-stat-key">Name</span><span class="settings-stat-val">${plan.name}</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">Age / Gender</span><span class="settings-stat-val">${plan.age} / ${plan.gender}</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">Height</span><span class="settings-stat-val">${plan.height} cm</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">BMI</span><span class="settings-stat-val">${plan.bmi}</span></div>
+      <div class="settings-stat-row"><span class="settings-stat-key">Daily Calories</span><span class="settings-stat-val" style="color:var(--accent)">${plan.calories} kcal</span></div>`;
+    document.getElementById('s_weight').value=plan.weight;
+    document.getElementById('s_goal').value=plan.goal;
+    document.getElementById('s_activity').value=plan.activity;
+    document.getElementById('s_duration').value=plan.duration;
+    document.getElementById('s_targetWeight').value=plan.targetWeight||'';
+    document.getElementById('s_targetWeightField').style.display=plan.goal==='maintain'?'none':'block';
+    document.getElementById('s_goal').onchange=function(){
+      document.getElementById('s_targetWeightField').style.display=this.value==='maintain'?'none':'block';
+    };
+    document.getElementById('settingsOverlay').classList.add('open');
+    document.getElementById('settingsPanel').classList.add('open');
+  }
+  function closeSettings() {
+    document.getElementById('settingsOverlay').classList.remove('open');
+    document.getElementById('settingsPanel').classList.remove('open');
+  }
+  function recalculateFromSettings() {
+    const existing=JSON.parse(localStorage.getItem('fitai_plan')||'null');
+    if (!existing) return;
+    const weight=parseFloat(document.getElementById('s_weight').value);
+    const goal=document.getElementById('s_goal').value;
+    const activity=document.getElementById('s_activity').value;
+    const duration=parseInt(document.getElementById('s_duration').value);
+    const targetWeight=goal!=='maintain'?parseFloat(document.getElementById('s_targetWeight').value)||null:null;
+    if (!weight||!duration){alert('Please fill all fields');return;}
+    let bmr=existing.gender==='male'?10*weight+6.25*existing.height-5*existing.age+5:10*weight+6.25*existing.height-5*existing.age-161;
+    bmr=Math.round(bmr);
+    const m={sedentary:1.2,moderate:1.375,active:1.55,very_active:1.725};
+    const tdee=Math.round(bmr*m[activity]);
+    let calories=goal==='lose'?tdee-500:goal==='gain'?tdee+300:tdee;
+    calories=Math.max(calories,1200);
+    const protein=Math.round(weight*(goal==='gain'?2.0:goal==='lose'?1.8:1.6));
+    const fats=Math.round((calories*0.25)/9);
+    const carbs=Math.round((calories-protein*4-fats*9)/4);
+    const bmi=(weight/((existing.height/100)**2)).toFixed(1);
+    const updated={...existing,weight,goal,activity,duration,targetWeight,
+      calories,protein,carbs,fats,bmr,tdee,bmi,updatedAt:new Date().toISOString()};
+    localStorage.setItem('fitai_plan',JSON.stringify(updated));
+    closeSettings();
+    window.location.reload();
+  }
+</script>
+
+  <!-- Settings overlay + panel -->
+  <div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-close">
+      <div class="settings-title">Edit Profile</div>
+      <button class="btn-close-panel" onclick="closeSettings()">✕</button>
+    </div>
+    <div id="settingsStats"></div>
+    <div class="settings-section-title">Update</div>
+    <div class="settings-field">
+      <label>Current Weight (kg)</label>
+      <input type="number" id="s_weight" min="30" max="250" />
+    </div>
+    <div class="settings-field">
+      <label>Goal</label>
+      <select id="s_goal">
+        <option value="lose">Lose Weight</option>
+        <option value="gain">Gain Muscle</option>
+        <option value="maintain">Maintain</option>
+      </select>
+    </div>
+    <div class="settings-field">
+      <label>Activity Level</label>
+      <select id="s_activity">
+        <option value="sedentary">Sedentary</option>
+        <option value="moderate">Moderate</option>
+        <option value="active">Active</option>
+        <option value="very_active">Very Active</option>
+      </select>
+    </div>
+    <div class="settings-field" id="s_targetWeightField">
+      <label>Target Weight (kg)</label>
+      <input type="number" id="s_targetWeight" min="30" max="250" />
+    </div>
+    <div class="settings-field">
+      <label>Duration (weeks)</label>
+      <input type="number" id="s_duration" min="1" max="52" />
+    </div>
+    <button class="btn-recalculate" onclick="recalculateFromSettings()">Recalculate Plan ⚡</button>
+  </div>
+</body>
+</html>
